@@ -1,4 +1,14 @@
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+!.mvn/wrapper/maven-wrapper.jar
+
+# Maven template
+
 # Compiled class file
+/target/
 *.class
 
 # Log file
@@ -21,3 +31,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.idea/$CACHE_FILE$
+.idea/.gitignore
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/tellus.iml
+.idea/vcs.xml
