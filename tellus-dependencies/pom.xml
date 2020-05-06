@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- <parent>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-parent</artifactId>
+         <version>2.2.6.RELEASE</version>
+         <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;
+     </parent>-->
+
+    <groupId>com.pn.tellus</groupId>
+    <artifactId>tellus-dependencies</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <developers>
+        <developer>
+            <id>Roy.L</id>
+            <name>Roy.L</name>
+            <email>tingdaodi@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/tingdaodi/tellus.git</url>
+        <connection>scm:git:git@github.com:tingdaodi/tellus.git</connection>
+        <developerConnection>scm:git:git@github.com:tingdaodi/tellus.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <!--<distributionManagement></distributionManagement>-->
+    <properties>
+        <!-- common -->
+        <tellus.version>1.0-SNAPSHOT</tellus.version>
+        <guava.version>29.0-jre</guava.version>
+        <gson.version>2.8.6</gson.version>
+        <hutool-all.version>5.3.2</hutool-all.version>
+
+        <!-- Spring Starter  -->
+        <druid.starter.version>1.1.22</druid.starter.version>
+        <mybatis.starter.version>3.3.1</mybatis.starter.version>
+        <dozer.starter.version>6.5.0</dozer.starter.version>
+        <swagger.starter.version>1.9.1.RELEASE</swagger.starter.version>
+        <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
+        <spring-security-oauth2.version>2.4.1.RELEASE</spring-security-oauth2.version>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Common -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+
+            <!-- Spring Starter -->
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring-security-oauth2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-spring-boot-starter</artifactId>
+                <version>${dozer.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spring4all</groupId>
+                <artifactId>swagger-spring-boot-starter</artifactId>
+                <version>${swagger.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-bootstrap-ui.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
