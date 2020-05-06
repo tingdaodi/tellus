@@ -3,6 +3,7 @@
 *.iws
 *.iml
 *.ipr
+/out/
 !.mvn/wrapper/maven-wrapper.jar
 
 # Maven template
