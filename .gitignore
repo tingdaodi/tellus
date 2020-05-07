@@ -3,6 +3,7 @@
 *.iws
 *.iml
 *.ipr
+target/
 /out/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -41,3 +42,8 @@ hs_err_pid*
 .idea/modules.xml
 .idea/tellus.iml
 .idea/vcs.xml
+tellus-config/src/
+tellus-crud/src/
+tellus-service-core/src/
+tellus-support/src/
+tellus-toolkit/src/
