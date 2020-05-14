@@ -9,6 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>tellus-config</artifactId>
+    <name>Tellus Config</name>
+    <description>Tellus Config</description>
 
     <dependencies>
         <dependency>

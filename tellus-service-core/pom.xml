@@ -6,11 +6,11 @@
         <artifactId>tellus-parent</artifactId>
         <groupId>com.pn.tellus</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../tellus/tellus-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>tellus-service-core</artifactId>
+    <name>Tellus Service Core</name>
+    <description>Tellus Service Core</description>
 
 
 </project>

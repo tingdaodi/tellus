@@ -6,11 +6,10 @@
         <artifactId>tellus-parent</artifactId>
         <groupId>com.pn.tellus</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../tellus/tellus-parent</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>tellus-toolkit</artifactId>
-
+    <name>Tellus Toolkit</name>
+    <description>Tellus Toolkit</description>
 
 </project>
