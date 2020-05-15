@@ -8,9 +8,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tellus-mybatis-generator</artifactId>
-    <name>Tellus Mybatis Generator</name>
-    <description>Tellus Mybatis Generator</description>
-
+    <artifactId>tellus-mybatis-generator-starter</artifactId>
+    <name>Tellus Mybatis Generator Starter</name>
+    <description>Tellus Mybatis Generator Starter</description>
 
 </project>

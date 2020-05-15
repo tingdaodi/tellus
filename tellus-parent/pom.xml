@@ -22,7 +22,7 @@
         <module>../tellus-service-core</module>
         <module>../tellus-support</module>
         <module>../tellus-toolkit</module>
-        <module>../tellus-mybatis-generator</module>
+        <module>../tellus-mybatis-generator-starter</module>
     </modules>
 
     <developers>
