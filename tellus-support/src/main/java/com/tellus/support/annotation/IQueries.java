@@ -1,6 +1,7 @@
 package com.tellus.support.annotation;
 
-import org.apache.ibatis.annotations.ResultType;
+import com.tellus.support.enums.basic.FactorType;
+import com.tellus.support.enums.basic.OptionType;
 
 import java.lang.annotation.*;
 
@@ -20,5 +21,23 @@ public @interface IQueries {
      */
     String value() default "";
 
+    /**
+     * @return 构建条件因子类型
+     */
+    FactorType type() default FactorType.TEXT;
 
+    /**
+     * @return 条件操作符
+     */
+    OptionType option() default OptionType.EQ;
+
+    /**
+     * @return 映射字段前缀
+     */
+    String columnPrefix() default "";
+
+    /**
+     * @return 排除字段构建条件
+     */
+    boolean exclude() default false;
 }

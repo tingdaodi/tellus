@@ -6,7 +6,7 @@ package com.tellus.support.interfaces;
  * @author Roy
  * @date 2020/5/15 22:52
  */
-public interface BaseErrorInfo {
+public interface IErrorCode {
 
     /**
      * 系统自定义异常标识

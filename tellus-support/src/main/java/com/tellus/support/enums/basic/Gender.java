@@ -1,5 +1,6 @@
 package com.tellus.support.enums.basic;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 
@@ -19,6 +20,7 @@ public enum Gender {
     MALE(1, "男"),
     ;
 
+    @EnumValue
     private final Integer code;
     private final String desc;
 
