@@ -41,6 +41,11 @@ public @interface IRedisSyncLock {
     int retryTimes() default 5;
 
     /**
+     * @return 当获取锁失败后的动作
+     */
+    LockFailAction action() default LockFailAction.RETRY;
+
+    /**
      * 当读取锁失败后的行为
      */
     enum LockFailAction {

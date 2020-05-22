@@ -1,5 +1,7 @@
-package com.tellus.config.operationlog;
+package com.tellus.config;
 
+import com.tellus.config.operationlog.OperationLogProperties;
+import com.tellus.config.operationlog.OperationLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

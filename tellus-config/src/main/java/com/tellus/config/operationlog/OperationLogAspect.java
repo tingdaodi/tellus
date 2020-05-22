@@ -1,12 +1,14 @@
 package com.tellus.config.operationlog;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tellus.config.gson.LocalDateJsonConverter;
 import com.tellus.config.gson.LocalDateTimeJsonConverter;
+import com.tellus.config.spring.SpringRequestUtils;
 import com.tellus.support.OperationLog;
 import com.tellus.support.annotation.IOperationLog;
 import com.tellus.support.exception.SystemErrorException;
@@ -17,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
@@ -29,7 +32,6 @@ import java.lang.reflect.Parameter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -82,6 +84,32 @@ public class OperationLogAspect {
                 })
                 .serializeNulls()
                 .create();
+    }
+
+    @Around(value = "@annotation(operationLog)")
+    public Object around(ProceedingJoinPoint point, IOperationLog operationLog) {
+        HttpServletRequest request = SpringRequestUtils.getRequest();
+        Object result = null;
+        OperationLog operationLogVO = new OperationLog();
+        try {
+            //  before
+            this.doBefore(point, operationLog, operationLogVO, request);
+            try {
+                //  execution method
+                result = point.proceed();
+            } finally {
+                //  after
+                this.doAfter(result, operationLog, operationLogVO, request);
+            }
+        } catch (Throwable throwable) {
+            //  throwing
+            this.doAfterThrowing(operationLog, operationLogVO, request, throwable);
+
+            //  returning throwing
+            return throwable;
+        }
+        //  returning
+        return result;
     }
 
     protected void doBefore(ProceedingJoinPoint joinPoint,
@@ -196,7 +224,7 @@ public class OperationLogAspect {
                 .getMethod().getParameters();
         Object[] args = joinPoint.getArgs();
 
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = Maps.newConcurrentMap();
         for (int i = 0; i < parameters.length; i++) {
             String name = parameters[i].getName();
             if (sensitiveClasses.contains(parameters[i].getParameterizedType().getTypeName())) {
@@ -223,7 +251,6 @@ public class OperationLogAspect {
         if (Strings.isNullOrEmpty(expression)) {
             return expression;
         }
-
         Matcher matcher = IS_EXPRESSION.matcher(expression);
         if (matcher.find()) {
             String value = matcher.group(1).trim();

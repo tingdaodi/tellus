@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class DozerGenerator implements IGenerator {
 
-    private Mapper dozerMapper = DozerBeanMapperBuilder.buildDefault();
+    private final Mapper dozerMapper = DozerBeanMapperBuilder.buildDefault();
 
     @Override
     public <T, S> T convert(S src, Class<T> clz) {
