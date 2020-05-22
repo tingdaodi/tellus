@@ -28,6 +28,7 @@ public class OperationLogProperties {
     private boolean afterThrowing = true;
 
     private Set<String> sensitives;
+
     private Set<String> sensitiveClasses = Sets.newHashSet(Principal.class.getName());
 
 }
