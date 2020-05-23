@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * description TODO
+ * Redission 分布式锁
  *
  * @author Roy
  * @date 2020/5/22 13:55
