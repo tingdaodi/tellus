@@ -1,4 +1,4 @@
-package com.tellus.config.spring;
+package com.tellus.toolkit.util;
 
 import com.tellus.support.RequestInfo;
 import com.tellus.toolkit.util.RequestUtils;

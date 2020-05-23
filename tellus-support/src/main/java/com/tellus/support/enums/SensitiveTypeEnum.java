@@ -1,5 +1,6 @@
 package com.tellus.support.enums;
 
+import com.tellus.support.interfaces.ISensitiveType;
 import lombok.Getter;
 
 import java.util.EnumSet;
@@ -11,7 +12,7 @@ import java.util.EnumSet;
  * @date 2020/5/17 17:45
  */
 @Getter
-public enum SensitiveTypeEnum {
+public enum SensitiveTypeEnum implements ISensitiveType {
 
     /**
      * 通用

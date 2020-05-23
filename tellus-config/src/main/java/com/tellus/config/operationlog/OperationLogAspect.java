@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tellus.config.gson.LocalDateJsonConverter;
 import com.tellus.config.gson.LocalDateTimeJsonConverter;
-import com.tellus.config.spring.SpringRequestUtils;
+import com.tellus.toolkit.util.SpringRequestUtils;
 import com.tellus.support.OperationLog;
 import com.tellus.support.annotation.IOperationLog;
 import com.tellus.support.exception.SystemErrorException;
