@@ -32,6 +32,7 @@ package com.tellus.toolkit;
  * <li>Strings computed by constant expressions are computed at compile time and then treated as if they were literals.</li>
  * <li>Strings computed by concatenation at run time are newly created and therefore distinct.</li>
  * </ul>
+ * @author eso_z
  */
 public interface StringPool {
 
