@@ -1,4 +1,4 @@
-package com.tellus.support.enums.error;
+package com.tellus.support.enums;
 
 import com.tellus.support.interfaces.IErrorCode;
 import lombok.Getter;

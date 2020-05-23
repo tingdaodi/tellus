@@ -1,6 +1,6 @@
 package com.tellus.support.exception;
 
-import com.tellus.support.enums.error.SystemErrorCodeEnum;
+import com.tellus.support.enums.SystemErrorCodeEnum;
 import com.tellus.support.interfaces.IErrorCode;
 import lombok.Getter;
 import lombok.Setter;
