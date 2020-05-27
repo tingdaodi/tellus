@@ -45,10 +45,10 @@ public class FactorKit {
     private static final Set<String> DEFAULT_EXCLUDES = Sets.newHashSet("serialVersionUID");
 
     public static <V, T> QueryWrapper<T> builderQueryWrapper(V info, Class<T> entityClass) {
-        return builderQueryWrapper(info, entityClass, DEFAULT_EXCLUDES);
+        return builderQueryWrapper(info, DEFAULT_EXCLUDES);
     }
 
-    public static <V, T> QueryWrapper<T> builderQueryWrapper(V info, Class<T> entityClass, Set<String> excludes) {
+    public static <V, T> QueryWrapper<T> builderQueryWrapper(V info, Set<String> excludes) {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         Map<String, List<Query>> queries = new HashMap<>(8);
         Class<?> infoClazz = info.getClass();
@@ -114,14 +114,14 @@ public class FactorKit {
 
         if (!queries.isEmpty()) {
             List<Factor> factors = builderFactor(queries);
-            factors.forEach(factor -> factor.handle(wrapper, entityClass));
+            factors.forEach(factor -> factor.handle(wrapper));
         }
 
         return wrapper;
     }
 
     public static <V, T> Map<IUniqueness, QueryWrapper<T>>
-    builderQueryWrapperForUniqueness(V info, Class<T> entityClass) {
+    builderQueryWrapperForUniqueness(V info) {
         Map<IUniqueness, QueryWrapper<T>> wrappers = Maps.newConcurrentMap();
         Class<?> infoClazz = info.getClass();
         Field[] fields = infoClazz.getDeclaredFields();
@@ -149,7 +149,8 @@ public class FactorKit {
                         .build();
 
                 QueryWrapper<T> queryWrapper = new QueryWrapper<>();
-                builderFactor(query).handle(queryWrapper, entityClass);
+                builderFactor(query).handle(queryWrapper);
+
                 wrappers.put(uniqueness, queryWrapper);
             }
         }

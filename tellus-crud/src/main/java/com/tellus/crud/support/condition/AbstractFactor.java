@@ -25,7 +25,7 @@ public abstract class AbstractFactor implements Factor {
     protected Object value;
 
     @Override
-    public <T> void handle(QueryWrapper<T> wrapper, Class<T> cls) {
+    public <T> void handle(QueryWrapper<T> wrapper) {
         if (null == value) {
             return;
         }

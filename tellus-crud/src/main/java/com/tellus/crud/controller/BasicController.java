@@ -1,6 +1,11 @@
 package com.tellus.crud.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.tellus.config.dozer.PageDozerGenerator;
+import com.tellus.crud.support.condition.FactorKit;
+import com.tellus.support.annotation.IQueries;
+import com.tellus.toolkit.util.SpringRequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -17,9 +22,57 @@ public class BasicController {
     @Autowired
     protected PageDozerGenerator dozerGenerator;
 
+    // ~ Protected Methods
+    // ==============================================================================
 
+    /**
+     * 获取用户名
+     *
+     * @return 用户名
+     */
+    protected String getUsername() {
+        return SpringRequestUtils.getHeaderValue("username");
+    }
+
+    /**
+     * 将 VO 转换成 Entity
+     *
+     * @param vo          VO
+     * @param entityClass 实体类型
+     * @param <V>         VO
+     * @param <T>         ENTITY
+     * @return Entity
+     */
     protected <V, T> T convert(V vo, Class<T> entityClass) {
         return this.dozerGenerator.convert(vo, entityClass);
+    }
+
+    /**
+     * 构建查询 wrapper
+     *
+     * @param info        VO
+     * @param entityClass 实体
+     * @param <V>         VO
+     * @param <T>         ENTITY
+     * @return QueryWrapper<T>
+     */
+    protected <V, T> QueryWrapper<T> builderWrapper(V info, Class<T> entityClass) {
+
+        if (null == info) {
+            return Wrappers.emptyWrapper();
+        }
+
+        QueryWrapper<T> wrapper;
+        IQueries iQueries = info.getClass().getAnnotation(IQueries.class);
+
+        if (null == iQueries) {
+            T entity = this.dozerGenerator.convert(info, entityClass);
+            wrapper = Wrappers.query(entity);
+        } else {
+            wrapper = FactorKit.builderQueryWrapper(info, entityClass);
+        }
+
+        return wrapper;
     }
 
 }

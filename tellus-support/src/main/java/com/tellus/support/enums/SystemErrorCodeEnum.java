@@ -40,6 +40,10 @@ public enum SystemErrorCodeEnum implements IErrorCode {
      * 服务器正忙
      */
     SERVICE_UNAVAILABLE(503, "Service Unavailable"),
+    /**
+     * 值唯一
+     */
+    UNIQUENESS(1000, "%s已存在"),
     ;
 
     private final Integer code;

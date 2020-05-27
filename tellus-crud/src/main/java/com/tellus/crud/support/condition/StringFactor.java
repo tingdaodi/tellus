@@ -13,7 +13,7 @@ import com.tellus.toolkit.CaseFormatKit;
 public class StringFactor extends AbstractFactor {
 
     @Override
-    public <T> void handle(QueryWrapper<T> wrapper, Class<T> cls) {
+    public <T> void handle(QueryWrapper<T> wrapper) {
         if (null == value) {
             return;
         }

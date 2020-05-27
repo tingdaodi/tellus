@@ -26,7 +26,7 @@ public abstract class AbstractMultiFactor implements MultiFactor {
     protected Object toValue;
 
     @Override
-    public <T> void handle(QueryWrapper<T> wrapper, Class<T> cls) {
+    public <T> void handle(QueryWrapper<T> wrapper) {
         if (null == value && null == toValue) {
             return;
         }

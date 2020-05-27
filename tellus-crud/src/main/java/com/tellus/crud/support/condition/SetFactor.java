@@ -20,7 +20,7 @@ public class SetFactor extends AbstractFactor {
 
     @SneakyThrows
     @Override
-    public <T> void handle(QueryWrapper<T> wrapper, Class<T> cls) {
+    public <T> void handle(QueryWrapper<T> wrapper) {
         if (null == value) {
             return;
         }

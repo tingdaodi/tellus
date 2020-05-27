@@ -35,11 +35,11 @@ public class PageInfo<T> implements Serializable {
     @ApiModelProperty(name = "queries", value = "查询条件")
     private T queries;
 
-    @ApiModelProperty(name = "asc", value = "升序排列数组")
-    private String[] asc;
+    @ApiModelProperty(name = "ascs", value = "升序排列数组")
+    private String[] ascs;
 
-    @ApiModelProperty(name = "desc", value = "降序排列数组")
-    private String[] desc;
+    @ApiModelProperty(name = "descs", value = "降序排列数组")
+    private String[] descs;
 
     public PageInfo<T> set(Consumer<T> consumer) {
         if (null != this.queries) {

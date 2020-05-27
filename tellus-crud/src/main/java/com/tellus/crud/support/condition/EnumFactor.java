@@ -17,12 +17,12 @@ public class EnumFactor extends AbstractFactor {
 
     @SneakyThrows
     @Override
-    public <T> void handle(QueryWrapper<T> wrapper, Class<T> cls) {
+    public <T> void handle(QueryWrapper<T> wrapper) {
         if (null == value) {
             return;
         }
 
-        Method method = FactorKit.getEnumValueMethod(cls);
+        Method method = FactorKit.getEnumValueMethod(value.getClass());
         method.setAccessible(true);
         Object enumValue = method.invoke(value);
 

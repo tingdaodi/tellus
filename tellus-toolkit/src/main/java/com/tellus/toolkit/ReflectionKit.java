@@ -121,7 +121,7 @@ public final class ReflectionKit {
         Class<?> cls = entity.getClass();
         Field field = ReflectionKit.getUserAnnotationField(cls, annotationClass)
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Could not" +
-                        " find @%s in Class: %s.", annotationClass.getSimpleName(), cls.getName()
+                        " find @%s in class: %s.", annotationClass.getSimpleName(), cls.getName()
                 )));
         Method method = ReflectionKit.getMethod(cls, field);
         method.setAccessible(true);
@@ -172,7 +172,9 @@ public final class ReflectionKit {
      */
     public static Map<String, Field> getFieldMap(Class<?> clazz) {
         List<Field> fieldList = getFieldList(clazz);
-        return CollectionUtil.isNotEmpty(fieldList) ? fieldList.stream().collect(Collectors.toMap(Field::getName, field -> field)) : Collections.emptyMap();
+        return CollectionUtil.isNotEmpty(fieldList)
+                ? fieldList.stream().collect(Collectors.toMap(Field::getName, field -> field))
+                : Collections.emptyMap();
     }
 
     /**

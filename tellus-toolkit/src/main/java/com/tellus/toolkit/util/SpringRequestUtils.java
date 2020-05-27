@@ -1,7 +1,6 @@
 package com.tellus.toolkit.util;
 
 import com.tellus.support.RequestInfo;
-import com.tellus.toolkit.util.RequestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -22,6 +21,10 @@ public class SpringRequestUtils {
 
     public static RequestInfo getRequestInfo() {
         return RequestUtils.getRequestInfo(getRequest());
+    }
+
+    public static String getHeaderValue(String name) {
+        return getRequest().getHeader(name);
     }
 
     public static HttpServletRequest getRequest() {

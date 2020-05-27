@@ -36,10 +36,9 @@ public interface Factor {
      * 设置 wrapper
      *
      * @param wrapper 条件对象
-     * @param cls     实体
      * @param <T>     泛型 Entity
      */
-    <T> void handle(QueryWrapper<T> wrapper, Class<T> cls);
+    <T> void handle(QueryWrapper<T> wrapper);
 
     /**
      * 是否支持的操作符
