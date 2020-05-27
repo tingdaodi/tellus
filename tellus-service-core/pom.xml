@@ -12,5 +12,16 @@
     <name>Tellus Service Core</name>
     <description>Tellus Service Core</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.pn.tellus</groupId>
+            <artifactId>tellus-crud</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 
 </project>

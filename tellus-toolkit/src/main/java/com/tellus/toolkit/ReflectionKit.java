@@ -19,6 +19,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
 import com.google.common.base.Preconditions;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,37 +54,6 @@ public final class ReflectionKit {
         PRIMITIVE_WRAPPER_TYPE_MAP.put(Integer.class, int.class);
         PRIMITIVE_WRAPPER_TYPE_MAP.put(Long.class, long.class);
         PRIMITIVE_WRAPPER_TYPE_MAP.put(Short.class, short.class);
-    }
-
-    /**
-     * <p>
-     * 反射 method 方法名，例如 getId
-     * </p>
-     *
-     * @param field
-     * @param str   属性字符串内容
-     * @deprecated 3.3.0 {@link #guessGetterName(Field, String)}
-     */
-    @Deprecated
-    public static String getMethodCapitalize(Field field, final String str) {
-        Class<?> fieldType = field.getType();
-        // fix #176
-        return StringUtils.guessGetterName(str, fieldType);
-    }
-
-    /**
-     * <p>
-     * 反射 method 方法名，例如 setVersion
-     * </p>
-     *
-     * @param field Field
-     * @param str   String JavaBean类的version属性名
-     * @return version属性的setter方法名称，e.g. setVersion
-     * @deprecated 3.0.8
-     */
-    @Deprecated
-    public static String setMethodCapitalize(Field field, final String str) {
-        return StringUtils.concatCapitalize("set", str);
     }
 
     /**
@@ -136,6 +106,32 @@ public final class ReflectionKit {
             return null;
         }
         return getMethodValue(entity.getClass(), entity, str);
+    }
+
+    /**
+     * <p>
+     * 获取 public get方法的值
+     * </p>
+     *
+     * @param entity          实体
+     * @param annotationClass 标注的注解
+     * @return Object
+     */
+    public static Object getMethodValue(Object entity, Class<? extends Annotation> annotationClass) {
+        Class<?> cls = entity.getClass();
+        Field field = ReflectionKit.getUserAnnotationField(cls, annotationClass)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Could not" +
+                        " find @%s in Class: %s.", annotationClass.getSimpleName(), cls.getName()
+                )));
+        Method method = ReflectionKit.getMethod(cls, field);
+        method.setAccessible(true);
+
+        try {
+            return method.invoke(entity);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalArgumentException(String.format("The field can't access in the class, "
+                    + "class: %s", cls.getName()));
+        }
     }
 
     /**
@@ -198,6 +194,34 @@ public final class ReflectionKit {
             }
         }
         return fields;
+    }
+
+    /**
+     * 获取标记注解的属性
+     *
+     * @param cls             反射类
+     * @param annotationClass 注解类
+     * @return 属性对象
+     */
+    public static Optional<Field> getUserAnnotationField(Class<?> cls, Class<? extends Annotation> annotationClass) {
+        return getFieldList(cls)
+                .stream()
+                .filter(field -> field.isAnnotationPresent(annotationClass))
+                .findFirst();
+    }
+
+    /**
+     * 获取属性
+     *
+     * @param cls       反射类
+     * @param fieldName 注解类
+     * @return 属性对象
+     */
+    public static Optional<Field> getField(Class<?> cls, String fieldName) {
+        Map<String, Field> fieldMap = getFieldMap(cls);
+        Preconditions.checkArgument(CollectionUtil.isNotEmpty(fieldMap),
+                "Error: NoSuchField in %s for %s. Cause:", cls.getSimpleName(), fieldName);
+        return Optional.ofNullable(fieldMap.get(fieldName));
     }
 
     /**
@@ -265,6 +289,21 @@ public final class ReflectionKit {
             return cls.getDeclaredMethod(ReflectionKit.guessGetterName(field, field.getName()));
         } catch (NoSuchMethodException e) {
             throw ExceptionUtils.mpe("Error: NoSuchMethod in %s.  Cause:", e, cls.getName());
+        }
+    }
+
+    /**
+     * 获取字段get方法
+     *
+     * @param cls       class
+     * @param fieldName 字段名
+     * @return Get方法
+     */
+    public static Method getMethod(Class<?> cls, String fieldName) {
+        try {
+            return cls.getDeclaredMethod(StringUtils.guessGetterName(fieldName, cls));
+        } catch (NoSuchMethodException e) {
+            throw ExceptionUtils.mpe("Error: NoSuchMethod in %s, Cause:", e, cls.getName());
         }
     }
 

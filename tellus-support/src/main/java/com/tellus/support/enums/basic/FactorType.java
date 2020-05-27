@@ -15,11 +15,11 @@ public enum FactorType {
     /**
      * 字符
      */
-    TEXT,
+    STRING,
     /**
      * 集合
      */
-    COLLECTION,
+    SET,
     /**
      * 数字
      */
