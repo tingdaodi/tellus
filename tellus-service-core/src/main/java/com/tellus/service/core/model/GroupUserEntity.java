@@ -3,6 +3,10 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +18,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-05-25
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_group_user")
 public class GroupUserEntity implements Serializable {
 
@@ -31,28 +39,4 @@ public class GroupUserEntity implements Serializable {
     @TableField("USER_ID")
     private Integer userId;
 
-
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    @Override
-    public String toString() {
-        return "GroupUserEntity{" +
-                "groupId=" + groupId +
-                ", userId=" + userId +
-                "}";
-    }
 }

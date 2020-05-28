@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -17,6 +21,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-05-25
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_sys_properties")
 public class SysPropertiesEntity implements Serializable {
 
@@ -76,91 +84,4 @@ public class SysPropertiesEntity implements Serializable {
     @TableField("UPDATED_AT")
     private LocalDateTime updatedAt;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "SysPropertiesEntity{" +
-                "id=" + id +
-                ", key=" + key +
-                ", value=" + value +
-                ", enabled=" + enabled +
-                ", remark=" + remark +
-                ", creator=" + creator +
-                ", createdAt=" + createdAt +
-                ", updatedBy=" + updatedBy +
-                ", updatedAt=" + updatedAt +
-                "}";
-    }
 }

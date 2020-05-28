@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -17,6 +21,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-05-25
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_user")
 public class UserEntity implements Serializable {
 
@@ -154,208 +162,4 @@ public class UserEntity implements Serializable {
     @TableField("DELETED")
     private Integer deleted;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public Integer getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Integer userType) {
-        this.userType = userType;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getOfficePhone() {
-        return officePhone;
-    }
-
-    public void setOfficePhone(String officePhone) {
-        this.officePhone = officePhone;
-    }
-
-    public LocalDateTime getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDateTime birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Integer getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Integer language) {
-        this.language = language;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public LocalDateTime getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(LocalDateTime lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    public String getLastLoginIp() {
-        return lastLoginIp;
-    }
-
-    public void setLastLoginIp(String lastLoginIp) {
-        this.lastLoginIp = lastLoginIp;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Integer getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", username=" + username +
-                ", password=" + password +
-                ", nickname=" + nickname +
-                ", gender=" + gender +
-                ", userType=" + userType +
-                ", status=" + status +
-                ", email=" + email +
-                ", phone=" + phone +
-                ", officePhone=" + officePhone +
-                ", birthday=" + birthday +
-                ", avatar=" + avatar +
-                ", language=" + language +
-                ", ipAddress=" + ipAddress +
-                ", lastLoginTime=" + lastLoginTime +
-                ", lastLoginIp=" + lastLoginIp +
-                ", remarks=" + remarks +
-                ", creator=" + creator +
-                ", createdAt=" + createdAt +
-                ", updater=" + updater +
-                ", updatedAt=" + updatedAt +
-                ", deleted=" + deleted +
-                "}";
-    }
 }

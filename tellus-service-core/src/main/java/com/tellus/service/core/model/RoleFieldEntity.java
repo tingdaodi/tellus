@@ -3,6 +3,10 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +18,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-05-25
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_role_field")
 public class RoleFieldEntity implements Serializable {
 
@@ -37,37 +45,4 @@ public class RoleFieldEntity implements Serializable {
     @TableField("DISPLAY_MODE")
     private Integer displayMode;
 
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public Integer getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(Integer fieldId) {
-        this.fieldId = fieldId;
-    }
-
-    public Integer getDisplayMode() {
-        return displayMode;
-    }
-
-    public void setDisplayMode(Integer displayMode) {
-        this.displayMode = displayMode;
-    }
-
-    @Override
-    public String toString() {
-        return "RoleFieldEntity{" +
-                "roleId=" + roleId +
-                ", fieldId=" + fieldId +
-                ", displayMode=" + displayMode +
-                "}";
-    }
 }

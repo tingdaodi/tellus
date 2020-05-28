@@ -3,6 +3,10 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +18,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-05-25
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_login_log")
 public class LoginLogEntity implements Serializable {
 
@@ -70,94 +78,7 @@ public class LoginLogEntity implements Serializable {
     /**
      * 是否成功 是否成功
      */
-    @TableField("SICCESSFUL")
-    private Integer siccessful;
+    @TableField("SUCCESSFUL")
+    private Integer successful;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(String loginTime) {
-        this.loginTime = loginTime;
-    }
-
-    public String getClientHost() {
-        return clientHost;
-    }
-
-    public void setClientHost(String clientHost) {
-        this.clientHost = clientHost;
-    }
-
-    public String getClientMac() {
-        return clientMac;
-    }
-
-    public void setClientMac(String clientMac) {
-        this.clientMac = clientMac;
-    }
-
-    public String getDevice() {
-        return device;
-    }
-
-    public void setDevice(String device) {
-        this.device = device;
-    }
-
-    public String getUserAgent() {
-        return userAgent;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
-    }
-
-    public String getReferer() {
-        return referer;
-    }
-
-    public void setReferer(String referer) {
-        this.referer = referer;
-    }
-
-    public Integer getSiccessful() {
-        return siccessful;
-    }
-
-    public void setSiccessful(Integer siccessful) {
-        this.siccessful = siccessful;
-    }
-
-    @Override
-    public String toString() {
-        return "LoginLogEntity{" +
-                "id=" + id +
-                ", username=" + username +
-                ", loginTime=" + loginTime +
-                ", clientHost=" + clientHost +
-                ", clientMac=" + clientMac +
-                ", device=" + device +
-                ", userAgent=" + userAgent +
-                ", referer=" + referer +
-                ", siccessful=" + siccessful +
-                "}";
-    }
 }

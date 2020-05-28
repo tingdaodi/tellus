@@ -3,6 +3,10 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +18,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-05-25
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_relation")
 public class RelationEntity implements Serializable {
 
@@ -43,46 +51,4 @@ public class RelationEntity implements Serializable {
     @TableField("DISTANCE")
     private Integer distance;
 
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Integer getAncestor() {
-        return ancestor;
-    }
-
-    public void setAncestor(Integer ancestor) {
-        this.ancestor = ancestor;
-    }
-
-    public Integer getDescendant() {
-        return descendant;
-    }
-
-    public void setDescendant(Integer descendant) {
-        this.descendant = descendant;
-    }
-
-    public Integer getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Integer distance) {
-        this.distance = distance;
-    }
-
-    @Override
-    public String toString() {
-        return "RelationEntity{" +
-                "type=" + type +
-                ", ancestor=" + ancestor +
-                ", descendant=" + descendant +
-                ", distance=" + distance +
-                "}";
-    }
 }

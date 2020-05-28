@@ -71,7 +71,6 @@ public abstract class AbstractBasicController<T> {
      * @return QueryWrapper<T>
      */
     protected <V> QueryWrapper<T> builderWrapper(V info, Class<T> entityClass) {
-
         if (null == info) {
             return Wrappers.emptyWrapper();
         }
