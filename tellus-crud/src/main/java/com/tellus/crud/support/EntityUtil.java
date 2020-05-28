@@ -11,7 +11,7 @@ import com.tellus.toolkit.ReflectionKit;
  * @author Roy
  * @date 2020/5/25 21:23
  */
-public class EntityUtils {
+public class EntityUtil {
 
     /**
      * 获取主键的值

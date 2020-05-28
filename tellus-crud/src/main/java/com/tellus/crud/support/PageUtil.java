@@ -15,7 +15,7 @@ import java.util.List;
  * @author Roy
  * @date 2020/5/28 0:22
  */
-public class PageUtils {
+public class PageUtil {
 
     /**
      * 将排序字段转换为大写下划线的格式

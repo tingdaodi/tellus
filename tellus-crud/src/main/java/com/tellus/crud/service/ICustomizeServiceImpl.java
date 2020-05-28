@@ -2,7 +2,7 @@ package com.tellus.crud.service;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tellus.crud.support.EntityUtils;
+import com.tellus.crud.support.EntityUtil;
 
 /**
  * 自定义: IService 实现类
@@ -20,6 +20,6 @@ public class ICustomizeServiceImpl<M extends BaseMapper<T>, T> extends ServiceIm
     @Override
     public Integer saveWithReturnId(T entity) {
         this.save(entity);
-        return EntityUtils.getTableId(entity);
+        return EntityUtil.getTableId(entity);
     }
 }

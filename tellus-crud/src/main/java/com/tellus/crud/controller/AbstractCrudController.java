@@ -2,35 +2,22 @@ package com.tellus.crud.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.google.common.base.Strings;
-import com.tellus.crud.service.ICustomizeService;
-import com.tellus.crud.support.EntityUtils;
-import com.tellus.crud.support.PageUtils;
-import com.tellus.crud.support.condition.FactorKit;
+import com.tellus.crud.support.PageUtil;
 import com.tellus.support.PageInfo;
 import com.tellus.support.PageWrapper;
 import com.tellus.support.annotation.IOperationLog;
-import com.tellus.support.annotation.IUniqueness;
 import com.tellus.support.enums.OperationTypeEnum;
-import com.tellus.support.exception.NotFoundException;
-import com.tellus.support.exception.NotMatchException;
 import com.tellus.toolkit.ReflectionKit;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-
-import static com.tellus.support.enums.SystemErrorCodeEnum.UNIQUENESS;
 
 /**
  * 通用 CRUD Controller
@@ -46,13 +33,11 @@ import static com.tellus.support.enums.SystemErrorCodeEnum.UNIQUENESS;
  * @date 2020/5/27 20:29
  */
 @Validated
-public class AbstractCrudController<T, V, C, R, U> extends BasicController {
+public abstract class AbstractCrudController<T, V, C, R, U> extends AbstractBasicController<T> {
 
     // ~ Static fields/initializers
     // ==============================================================================
 
-    @Autowired
-    protected ICustomizeService<T> customizeService;
 
     // ~ Common Methods
     // ==============================================================================
@@ -64,7 +49,7 @@ public class AbstractCrudController<T, V, C, R, U> extends BasicController {
         QueryWrapper<T> wrapper = this.builderWrapper(pageIno.getQueries(), getEntityClass());
 
         IPage<T> result = this.customizeService
-                .page(PageUtils.builderOrderUpperUnderscore(pageIno), wrapper);
+                .page(PageUtil.builderOrderUpperUnderscore(pageIno), wrapper);
 
         return this.dozerGenerator.convert(result, getVoClass());
     }
@@ -103,72 +88,34 @@ public class AbstractCrudController<T, V, C, R, U> extends BasicController {
     @IOperationLog(theme = "创建一条记录", type = OperationTypeEnum.CREATED, operator = "#{#username}")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "创建一条记录", notes = "创建一条记录 Restful API")
-    public Integer save(@RequestHeader("username") String username,
+    public Integer save(@SuppressWarnings("unused") @RequestHeader("username") String username,
                         @Valid @RequestBody C cratedVO) {
-
-        return null;
+        //  校验数据唯一性
+        checkUniqueness(cratedVO);
+        T entity = this.convert(cratedVO, getEntityClass());
+        return this.customizeService.saveWithReturnId(entity);
     }
 
-    // ~ Override Methods
+    @IOperationLog(theme = "更新记录", type = OperationTypeEnum.UPDATED, operator = "#{#username}")
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "更新记录", notes = "更新一条记录 Restful API")
+    public Boolean update(@RequestHeader("username") String username,
+                          @Valid @RequestBody U updatedVO) {
+        //  校验数据唯一性
+        checkUniqueness(updatedVO);
+        T entity = this.convert(updatedVO, getEntityClass());
+        return this.customizeService.updateById(entity);
+    }
+
+    // ~ Override/Protected Methods
     // ==============================================================================
-
-    /**
-     * 根据 TableId, IPrimaryKey, 查询资源是否存在
-     *
-     * @param entity 实体
-     */
-    protected void checkExistenceByPrimaryKey(T entity) {
-        Integer id = EntityUtils.getIdToInteger(entity);
-        checkExistenceByPrimaryKey(id);
-    }
-
-    /**
-     * 根据主键查询资源是否存在
-     *
-     * @param id 主键
-     */
-    protected void checkExistenceByPrimaryKey(Serializable id) {
-        this.customizeService.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Resource does not exist," +
-                        " %s, id: %s", getEntityClass(), id)));
-    }
-
-    protected <S> void checkUniqueness(S s) {
-        IUniqueness uniquenessClass = s.getClass().getAnnotation(IUniqueness.class);
-        if (null == uniquenessClass) {
-            return;
-        }
-
-        OperationTypeEnum operationType = uniquenessClass.operationType();
-        Map<IUniqueness, QueryWrapper<T>> wrappers = FactorKit.builderQueryWrapperForUniqueness(s);
-        for (Map.Entry<IUniqueness, QueryWrapper<T>> entry : wrappers.entrySet()) {
-            IUniqueness uniqueness = entry.getKey();
-            List<T> list = this.customizeService.list(entry.getValue());
-
-            if (null != list && !list.isEmpty()) {
-                if (list.size() == 1 && operationType == OperationTypeEnum.UPDATED) {
-                    Integer id = (Integer) EntityUtils.getTableId(list.get(0));
-                    Integer incomingId = (Integer) EntityUtils.getPrimaryKey(s);
-
-                    if (Objects.equals(id, incomingId)) {
-                        return;
-                    }
-                }
-
-                String message = Strings.isNullOrEmpty(uniqueness.message())
-                        ? String.format(UNIQUENESS.getDescription(), uniqueness.value())
-                        : uniqueness.message();
-
-                throw new NotMatchException(UNIQUENESS.getCode(), message);
-            }
-        }
-    }
 
     /**
      * ENTITY 实体
      *
      * @return 实体
      */
+    @Override
     protected Class<T> getEntityClass() {
         //noinspection unchecked
         return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), 1);
@@ -213,6 +160,9 @@ public class AbstractCrudController<T, V, C, R, U> extends BasicController {
         //noinspection unchecked
         return (Class<U>) ReflectionKit.getSuperClassGenericType(getClass(), 5);
     }
+
+    // ~ Private Methods
+    // ==============================================================================
 }
 
 
