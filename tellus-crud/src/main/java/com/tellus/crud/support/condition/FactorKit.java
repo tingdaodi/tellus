@@ -169,11 +169,9 @@ public class FactorKit {
             Optional<Query> operator = values.stream()
                     .filter(query -> query.factorType != FactorType.OPERATOR)
                     .findFirst();
-
             List<Query> valueQueries = values.stream()
                     .filter(query -> query.factorType != FactorType.OPERATOR)
                     .collect(Collectors.toList());
-
             if (valueQueries.isEmpty() || valueQueries.size() > MULTI_CONDITION_SUPPORTED) {
                 log.warn("Supports up to two conditional queries, fieldName:" + key);
                 return;
@@ -182,7 +180,6 @@ public class FactorKit {
             Query query = valueQueries.get(0);
             Object value = query.getValue();
             OptionType optionType = query.getOptionType();
-
             if (operator.isPresent() && null != operator.get().optionType) {
                 optionType = operator.get().optionType;
             }
@@ -213,14 +210,12 @@ public class FactorKit {
             if (null == value && null == otherValue) {
                 return;
             }
-
             if (null == otherValue) {
                 factor.setOptionType(OptionType.GE);
                 factor.setValue(value);
                 factors.add(factor);
                 return;
             }
-
             if (null == value) {
                 factor.setOptionType(OptionType.LE);
                 factor.setValue(otherValue);
@@ -231,7 +226,6 @@ public class FactorKit {
             if (factor instanceof MultiFactor && isBetweenSupported(optionType)) {
                 MultiFactor multiFactor = (MultiFactor) factor;
                 multiFactor.setOptionType(OptionType.BETWEEN);
-
                 if (optionType == OptionType.BETWEEN
                         || optionType == OptionType.NOT_BETWEEN) {
                     multiFactor.setValue(query.value);
@@ -243,7 +237,6 @@ public class FactorKit {
                 factors.add(multiFactor);
             } else {
                 factors.add(factor);
-
                 Factor otherFactor = builderFactor(other.factorType);
                 otherFactor.setFieldName(key);
                 otherFactor.setOptionType(other.optionType);
