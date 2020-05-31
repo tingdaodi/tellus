@@ -68,9 +68,11 @@ public final class ReflectionKit {
      */
     public static Object getMethodValue(Class<?> cls, Object entity, String str) {
         Map<String, Field> fieldMaps = getFieldMap(cls);
+
+        Preconditions.checkArgument(CollectionUtil.isNotEmpty(fieldMaps),
+                "Error: NoSuchField in %s for %s.  Cause:", cls.getSimpleName(), str);
+
         try {
-            Preconditions.checkArgument(CollectionUtil.isNotEmpty(fieldMaps),
-                    "Error: NoSuchField in %s for %s.  Cause:", cls.getSimpleName(), str);
             Method method = cls.getMethod(guessGetterName(fieldMaps.get(str), str));
             return method.invoke(entity);
         } catch (NoSuchMethodException e) {
