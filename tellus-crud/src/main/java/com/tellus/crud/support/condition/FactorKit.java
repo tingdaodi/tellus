@@ -169,6 +169,7 @@ public class FactorKit {
             Optional<Query> operator = values.stream()
                     .filter(query -> query.factorType != FactorType.OPERATOR)
                     .findFirst();
+
             List<Query> valueQueries = values.stream()
                     .filter(query -> query.factorType != FactorType.OPERATOR)
                     .collect(Collectors.toList());
