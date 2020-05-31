@@ -26,6 +26,6 @@ public class PageDozerGenerator extends DozerGenerator implements IPageHelperGen
     @Override
     public <T, V, S extends PageInfo<V>> PageInfo<V> convert(S pageInfo, Class<V> clz) {
         return new PageInfo<>(pageInfo.getSize(), pageInfo.getCurrent(),
-                this.convert(pageInfo.getQueries(), clz), pageInfo.getAsc(), pageInfo.getDesc());
+                this.convert(pageInfo.getQueries(), clz), pageInfo.getAscs(), pageInfo.getDescs());
     }
 }

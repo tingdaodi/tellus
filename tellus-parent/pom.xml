@@ -49,6 +49,8 @@
         <maven.compiler>${java.version}</maven.compiler>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+
+        <tellus.version>1.0-SNAPSHOT</tellus.version>
     </properties>
 
     <dependencyManagement>
@@ -64,27 +66,27 @@
             <dependency>
                 <groupId>com.pn.tellus</groupId>
                 <artifactId>tellus-config</artifactId>
-                <version>${project.version}</version>
+                <version>${tellus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.pn.tellus</groupId>
                 <artifactId>tellus-crud</artifactId>
-                <version>${project.version}</version>
+                <version>${tellus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.pn.tellus</groupId>
                 <artifactId>tellus-service-core</artifactId>
-                <version>${project.version}</version>
+                <version>${tellus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.pn.tellus</groupId>
                 <artifactId>tellus-support</artifactId>
-                <version>${project.version}</version>
+                <version>${tellus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.pn.tellus</groupId>
                 <artifactId>tellus-toolkit</artifactId>
-                <version>${project.version}</version>
+                <version>${tellus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

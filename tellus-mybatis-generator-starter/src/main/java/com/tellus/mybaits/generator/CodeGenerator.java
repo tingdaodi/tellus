@@ -58,8 +58,8 @@ public class CodeGenerator {
 
         strategy.setExclude("");
 
-        strategy.setSuperServiceClass("");
-        strategy.setSuperServiceImplClass("");
+        strategy.setSuperServiceClass("com.tellus.crud.service.ICustomizeService");
+        strategy.setSuperServiceImplClass("com.tellus.crud.service.ICustomizeServiceImpl");
         mpg.setStrategy(strategy);
 
         PackageConfig pc = new PackageConfig();

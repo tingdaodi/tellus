@@ -20,6 +20,6 @@ public class ICustomizeServiceImpl<M extends BaseMapper<T>, T> extends ServiceIm
     @Override
     public Integer saveWithReturnId(T entity) {
         this.save(entity);
-        return EntityUtil.getTableId(entity);
+        return (Integer) EntityUtil.getTableId(entity);
     }
 }

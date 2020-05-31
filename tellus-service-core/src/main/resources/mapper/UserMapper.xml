@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tellus.service.core.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tellus.service.core.model.UserEntity">
+        <id column="ID" property="id" />
+        <result column="USERNAME" property="username" />
+        <result column="PASSWORD" property="password" />
+        <result column="NICKNAME" property="nickname" />
+        <result column="GENDER" property="gender" />
+        <result column="USER_TYPE" property="userType" />
+        <result column="STATUS" property="status" />
+        <result column="EMAIL" property="email" />
+        <result column="PHONE" property="phone" />
+        <result column="OFFICE_PHONE" property="officePhone" />
+        <result column="BIRTHDAY" property="birthday" />
+        <result column="AVATAR" property="avatar" />
+        <result column="LANGUAGE" property="language" />
+        <result column="IP_ADDRESS" property="ipAddress" />
+        <result column="LAST_LOGIN_TIME" property="lastLoginTime" />
+        <result column="LAST_LOGIN_IP" property="lastLoginIp" />
+        <result column="REMARKS" property="remarks" />
+        <result column="CREATOR" property="creator" />
+        <result column="CREATED_AT" property="createdAt" />
+        <result column="UPDATER" property="updater" />
+        <result column="UPDATED_AT" property="updatedAt" />
+        <result column="DELETED" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, USERNAME, PASSWORD, NICKNAME, GENDER, USER_TYPE, STATUS, EMAIL, PHONE, OFFICE_PHONE, BIRTHDAY, AVATAR, LANGUAGE, IP_ADDRESS, LAST_LOGIN_TIME, LAST_LOGIN_IP, REMARKS, CREATOR, CREATED_AT, UPDATER, UPDATED_AT, DELETED
+    </sql>
+
+</mapper>

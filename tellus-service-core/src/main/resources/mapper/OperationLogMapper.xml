@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tellus.service.core.mapper.OperationLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tellus.service.core.model.OperationLogEntity">
+        <id column="ID" property="id" />
+        <result column="THEME" property="theme" />
+        <result column="OPERATOR" property="operator" />
+        <result column="OPERATE_TYPE" property="operateType" />
+        <result column="OPERATION_BEGIN_TIME" property="operationBeginTime" />
+        <result column="OPERATION_END_TIME" property="operationEndTime" />
+        <result column="INCOMING_PARAMS" property="incomingParams" />
+        <result column="RESULT_PARAMS" property="resultParams" />
+        <result column="SUCCESSFUL" property="successful" />
+        <result column="EXCEPTION" property="exception" />
+        <result column="CLIENT_IP" property="clientIp" />
+        <result column="REQUEST_HOST" property="requestHost" />
+        <result column="REQUEST_URL" property="requestUrl" />
+        <result column="REQUEST_METHOD" property="requestMethod" />
+        <result column="REMARK" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, THEME, OPERATOR, OPERATE_TYPE, OPERATION_BEGIN_TIME, OPERATION_END_TIME, INCOMING_PARAMS, RESULT_PARAMS, SUCCESSFUL, EXCEPTION, CLIENT_IP, REQUEST_HOST, REQUEST_URL, REQUEST_METHOD, REMARK
+    </sql>
+
+</mapper>

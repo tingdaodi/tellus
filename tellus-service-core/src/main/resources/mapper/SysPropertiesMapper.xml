@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tellus.service.core.mapper.SysPropertiesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tellus.service.core.model.SysPropertiesEntity">
+        <id column="ID" property="id" />
+        <result column="KEY" property="key" />
+        <result column="VALUE" property="value" />
+        <result column="ENABLED" property="enabled" />
+        <result column="REMARK" property="remark" />
+        <result column="CREATOR" property="creator" />
+        <result column="CREATED_AT" property="createdAt" />
+        <result column="UPDATED_BY" property="updatedBy" />
+        <result column="UPDATED_AT" property="updatedAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, KEY, VALUE, ENABLED, REMARK, CREATOR, CREATED_AT, UPDATED_BY, UPDATED_AT
+    </sql>
+
+</mapper>

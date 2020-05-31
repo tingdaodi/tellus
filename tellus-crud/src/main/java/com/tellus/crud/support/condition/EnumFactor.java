@@ -3,6 +3,7 @@ package com.tellus.crud.support.condition;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tellus.support.enums.basic.OptionType;
 import com.tellus.toolkit.CaseFormatKit;
+import lombok.Builder;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Method;
@@ -13,6 +14,7 @@ import java.lang.reflect.Method;
  * @author Roy
  * @date 2020/5/26 10:09
  */
+@Builder
 public class EnumFactor extends AbstractFactor {
 
     @SneakyThrows

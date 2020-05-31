@@ -24,7 +24,7 @@ public @interface IQueries {
     /**
      * @return 构建条件因子类型
      */
-    FactorType type() default FactorType.TEXT;
+    FactorType type() default FactorType.STRING;
 
     /**
      * @return 条件操作符
