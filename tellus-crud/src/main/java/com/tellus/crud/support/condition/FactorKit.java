@@ -44,7 +44,7 @@ public class FactorKit {
      */
     private static final Set<String> DEFAULT_EXCLUDES = Sets.newHashSet("serialVersionUID");
 
-    public static <V, T> QueryWrapper<T> builderQueryWrapper(V info, Class<T> entityClass) {
+    public static <V, T> QueryWrapper<T> builderQueryWrapper(V info) {
         return builderQueryWrapper(info, DEFAULT_EXCLUDES);
     }
 
@@ -185,7 +185,8 @@ public class FactorKit {
                 optionType = operator.get().optionType;
             }
 
-            if (isBetweenSupported(optionType) && valueQueries.size() != MULTI_CONDITION_SUPPORTED) {
+            boolean betweenSupported = isBetween(optionType) || isNotBetween(optionType);
+            if (betweenSupported && valueQueries.size() != MULTI_CONDITION_SUPPORTED) {
                 log.warn("Query is <between> option type is not configured with begin/end annotations, ex.: @IQuery(" +
                         "OptionType.BETWEEN) and @IQuery(OptionType.BETWEEN_END), fieldName:" + query.getFieldName());
                 return;
@@ -224,9 +225,9 @@ public class FactorKit {
                 return;
             }
 
-            if (factor instanceof MultiFactor && isBetweenSupported(optionType)) {
+            if (factor instanceof MultiFactor && betweenSupported) {
                 MultiFactor multiFactor = (MultiFactor) factor;
-                multiFactor.setOptionType(OptionType.BETWEEN);
+                multiFactor.setOptionType(isBetween(optionType) ? OptionType.BETWEEN : OptionType.NOT_BETWEEN);
                 if (optionType == OptionType.BETWEEN
                         || optionType == OptionType.NOT_BETWEEN) {
                     multiFactor.setValue(query.value);
@@ -307,10 +308,13 @@ public class FactorKit {
         }
     }
 
-    private static boolean isBetweenSupported(OptionType optionType) {
+    private static boolean isBetween(OptionType optionType) {
         return optionType == OptionType.BETWEEN
-                || optionType == OptionType.BETWEEN_END
-                || optionType == OptionType.NOT_BETWEEN
+                || optionType == OptionType.BETWEEN_END;
+    }
+
+    private static boolean isNotBetween(OptionType optionType) {
+        return optionType == OptionType.NOT_BETWEEN
                 || optionType == OptionType.NOT_BETWEEN_END;
     }
 

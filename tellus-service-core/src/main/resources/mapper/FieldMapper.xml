@@ -15,10 +15,86 @@
         <result column="CREATED_AT" property="createdAt"/>
         <result column="UPDATER" property="updater"/>
         <result column="UPDATED_AT" property="updatedAt"/>
+        <result column="DISPLAY_MODE" property="displayMode"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
+    <!-- @formatter:off -->
+    <!--suppress SqlResolve -->
     <sql id="Base_Column_List">
         ID, RESOURCE_ID, METHOD, LABEL, NAME, TYPE, ENABLED, REMARK, CREATOR, CREATED_AT, UPDATER, UPDATED_AT
     </sql>
+    <!-- @formatter:on -->
+
+    <!-- 查询属于角色的字段信息 (包含下级角色) -->
+    <select id="selectSubsByRoleIds" resultMap="BaseResultMap">
+        SELECT F.ID,
+               F.RESOURCE_ID,
+               F.METHOD,
+               F.LABEL,
+               F.NAME,
+               F.TYPE,
+               F.ENABLED,
+               F.REMARK,
+               F.CREATOR,
+               F.CREATED_AT,
+               F.UPDATER,
+               F.UPDATED_AT,
+               IFNULL(RRF.DISPLAY_MODE, 1) DISPLAY_MODE
+        FROM T_FIELD F
+                     JOIN T_ROLE_FIELD RF ON F.ID = RF.FIELD_ID
+                     JOIN (SELECT ANCESTOR, DESCENDANT
+                           FROM T_RELATION REL
+                                        JOIN T_ROLE R ON R.ID = REL.DESCENDANT AND REL.TYPE = 3) ROLE
+                ON ROLE.DESCENDANT = RF.ROLE_ID
+                     JOIN (SELECT ANCESTOR, FIELD_ID, MIN(DISPLAY_MODE) DISPLAY_MODE
+                           FROM T_RELATION REL
+                                        JOIN T_ROLE R ON REL.DESCENDANT = R.ID AND REL.TYPE = 3
+                                        JOIN T_ROLE_FIELD RF ON R.ID = RF.ROLE_ID
+                           GROUP BY ANCESTOR, FIELD_ID) RRF
+                ON RRF.ANCESTOR = ROLE.ANCESTOR AND RRF.FIELD_ID = RF.FIELD_ID
+        <where>
+            <if test="roleIds != null and roleIds.size() != 0">
+                AND ROLE.ANCESTOR IN
+                <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+                    #{roleId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询属于资源的字段信息 -->
+    <select id="selectSubsByRoleIdsOfResource" resultMap="BaseResultMap">
+        SELECT DISTINCT F.ID,
+                        F.RESOURCE_ID,
+                        F.METHOD,
+                        F.LABEL,
+                        F.NAME,
+                        F.TYPE,
+                        F.ENABLED,
+                        F.REMARK,
+                        F.CREATOR,
+                        F.CREATED_AT,
+                        F.UPDATER,
+                        F.UPDATED_AT,
+                        IFNULL(FI.DISPLAY_MODE, 1) DISPLAY_MODE
+        FROM T_FIELD F
+                     JOIN T_ROLE_FIELD RF ON RF.FIELD_ID = F.ID
+                     JOIN T_RESOURCE R ON F.RESOURCE_ID = R.ID
+                     JOIN (SELECT ANCESTOR, R2.ID
+                           FROM T_RELATION REL
+                                        JOIN T_ROLE R2 ON R2.ID = REL.DESCENDANT AND REL.TYPE = 3) ROLE
+                ON ROLE.ID = RF.ROLE_ID
+                     JOIN (SELECT FIELD_ID, MIN(DISPLAY_MODE) DISPLAY_MODE FROM T_ROLE_FIELD RF GROUP BY FIELD_ID) FI
+                ON FI.FIELD_ID = F.ID
+        <where>
+            F.RESOURCE_ID = #{resourceId}
+            <if test="roleIds != null and roleIds.size() != 0">
+                AND ROLE.ANCESTOR IN
+                <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+                    #{roleId}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

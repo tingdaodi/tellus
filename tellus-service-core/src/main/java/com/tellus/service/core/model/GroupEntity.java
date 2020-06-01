@@ -1,17 +1,15 @@
 package com.tellus.service.core.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -83,5 +81,11 @@ public class GroupEntity implements Serializable {
      */
     @TableField("UPDATED_AT")
     private LocalDateTime updatedAt;
+
+    /**
+     * 直属上级 Id
+     */
+    @TableField(exist = false)
+    private Integer ancestor;
 
 }

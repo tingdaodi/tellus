@@ -16,22 +16,23 @@
     </sql>
 
     <!-- 批量删除角色-字段关系数据, (下级角色同步删除) -->
-    <delete id="deleteBatchWithSubordinates">
-        DELETE FROM T_ROLE_FIELD WHERE ROLE_ID IN (SELECT DESCENDANT FROM T_RELATION WHERE TYPE = 3 AND ANCESTOR = #{roleId})
+    <delete id="deleteBatchWithSubs">
+        DELETE
+        FROM T_ROLE_FIELD WHERE ROLE_ID IN (SELECT DESCENDANT FROM T_RELATION WHERE TYPE = 3 AND ANCESTOR = #{roleId})
         <if test="fieldIds != null and fieldIds.size() != 0">
             AND FIELD_ID IN
-            <foreach collection="fieldIds" index="index" item="fieldId" open="" close="" separator=";">
+            <foreach collection="fieldIds" index="index" item="fieldId" open="" close="" separator=",">
                 #{fieldId}
             </foreach>
         </if>
     </delete>
 
-    <!-- 批量更新角色-字段关系数据 (同步下级角色) -->
-    <update id="updateBatchWithSubordinates" parameterType="java.util.List">
+    <!-- 批量更新角色-字段关系数据 (同步下级角色) (MySql) -->
+    <update id="updateBatchWithSubs" parameterType="java.util.List">
         <foreach collection="entities" item="item" index="index" open="" close="" separator=";">
             UPDATE T_ROLE_FIELD RF
             <set>
-                RF.DISPLAY_MODE = #{item.displayMode,jdbcType=INTEGER}
+                RF.DISPLAY_MODE = #{item.displayMode}
             </set>
             WHERE RF.ROLE_ID IN
                   (SELECT REL.DESCENDANT FROM T_RELATION REL WHERE REL.TYPE = 3 AND REL.ANCESTOR = #{item.roleId})
@@ -39,4 +40,23 @@
               AND (RF.DISPLAY_MODE <![CDATA[<]]> #{item.displayMode} OR RF.ROLE_ID = #{item.roleId})
         </foreach>
     </update>
+
+    <!-- 查询角色及其所有下级角色拥有的字段关系数据 (包含 #{ancestor}) -->
+    <!-- @formatter:off -->
+    <select id="selectSubs" resultMap="BaseResultMap">
+        SELECT ROLE_ID, FIELD_ID, DISPLAY_MODE
+        FROM T_RELATION REL,
+             T_ROLE R,
+             T_ROLE_FIELD RF
+        WHERE REL.DESCENDANT = R.ID
+          AND REL.TYPE = 3
+          AND R.ID = RF.ROLE_ID
+        <if test="roleIds != null and roleIds.size() != 0">
+            AND REL.ANCESTOR IN
+            <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+        </if>
+    </select>
+    <!-- @formatter:on -->
 </mapper>

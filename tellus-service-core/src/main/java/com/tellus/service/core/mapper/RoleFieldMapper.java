@@ -23,7 +23,7 @@ public interface RoleFieldMapper extends BaseMapper<RoleFieldEntity> {
      * @param fieldIds 字段IDs
      * @return 受影响的行数
      */
-    int deleteBatchWithSubordinates(@Param("roleId") Integer roleId, @Param("fieldIds") List<Integer> fieldIds);
+    int deleteBatchWithSubs(@Param("roleId") Integer roleId, @Param("fieldIds") List<Integer> fieldIds);
 
     /**
      * 批量更新角色-字段关系数据, (下级角色同步修改)
@@ -31,7 +31,14 @@ public interface RoleFieldMapper extends BaseMapper<RoleFieldEntity> {
      * @param entities 角色-字段关系集合
      * @return 受影响的行数
      */
-    int updateBatchWithSubordinates(@Param("entities") List<RoleFieldEntity> entities);
+    int updateBatchWithSubs(@Param("entities") List<RoleFieldEntity> entities);
 
+    /**
+     * 查询角色及其所有下级角色拥有的字段关系数据 (包含 #{ancestor})
+     *
+     * @param roleIds 上级角色ID
+     * @return 角色-字段关系
+     */
+    List<RoleFieldEntity> selectSubs(@Param("roleIds") List<Integer> roleIds);
 
 }

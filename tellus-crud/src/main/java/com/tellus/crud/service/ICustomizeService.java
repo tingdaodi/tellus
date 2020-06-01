@@ -2,10 +2,13 @@ package com.tellus.crud.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+import com.tellus.crud.support.EntityUtil;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * 扩充 IService
@@ -21,7 +24,9 @@ public interface ICustomizeService<T> extends IService<T> {
      * @param id ID
      * @return Boolean
      */
-    Boolean contains(Integer id);
+    default Boolean contains(Integer id) {
+        return null != this.getById(id);
+    }
 
     /**
      * 根据主键查询资源
@@ -46,12 +51,26 @@ public interface ICustomizeService<T> extends IService<T> {
     }
 
     /**
-     * 插入一条数据
+     * 插入一条数据, 返回ID
      *
      * @param entity 实体
-     * @return Integer
+     * @return Integer ID
      */
-    Integer saveWithReturnId(T entity);
+    default Integer saveWithReturnId(T entity) {
+        return saveWithReturnId(entity, EntityUtil::getIdToInteger);
+    }
+
+    /**
+     * 插入一条数据, 返回ID
+     *
+     * @param entity      实体
+     * @param getIdMapper 获取 ID 表达式
+     * @return Integer ID
+     */
+    default Integer saveWithReturnId(T entity, Function<T, Integer> getIdMapper) {
+        this.save(entity);
+        return getIdMapper.apply(entity);
+    }
 
     /**
      * 查询列表

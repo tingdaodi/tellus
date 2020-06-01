@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tellus.service.core.mapper.GroupMapper">
-
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.tellus.service.core.model.GroupEntity">
-        <id column="ID" property="id" />
-        <result column="NAME" property="name" />
-        <result column="CODE" property="code" />
-        <result column="ENABLED" property="enabled" />
-        <result column="REMARK" property="remark" />
-        <result column="CREATOR" property="creator" />
-        <result column="CREATED_AT" property="createdAt" />
-        <result column="UPDATER" property="updater" />
-        <result column="UPDATED_AT" property="updatedAt" />
+        <id column="ID" property="id"/>
+        <result column="NAME" property="name"/>
+        <result column="CODE" property="code"/>
+        <result column="ENABLED" property="enabled"/>
+        <result column="REMARK" property="remark"/>
+        <result column="CREATOR" property="creator"/>
+        <result column="CREATED_AT" property="createdAt"/>
+        <result column="UPDATER" property="updater"/>
+        <result column="UPDATED_AT" property="updatedAt"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
+    <!-- @formatter:off -->
+    <!--suppress SqlResolve -->
     <sql id="Base_Column_List">
         ID, NAME, CODE, ENABLED, REMARK, CREATOR, CREATED_AT, UPDATER, UPDATED_AT
     </sql>
+    <!-- @formatter:on -->
+
+    <!-- 根据用户 Id, 查询部门 -->
+    <select id="selectByUserIds" resultMap="BaseResultMap">
+        
+    </select>
+
 
 </mapper>

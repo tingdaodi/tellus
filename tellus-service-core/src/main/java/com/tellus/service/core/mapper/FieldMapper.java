@@ -2,8 +2,6 @@ package com.tellus.service.core.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tellus.service.core.model.FieldEntity;
-import com.tellus.service.core.model.RoleFieldEntity;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,8 +16,22 @@ import java.util.List;
  */
 public interface FieldMapper extends BaseMapper<FieldEntity> {
 
-    // ~ Role-Field Relation Methods
-    // ==================================================================================
+    /**
+     * 查询属于角色的字段信息 (包含下级角色)
+     *
+     * @param roleIds 角色 Ids
+     * @return 字段信息
+     */
+    List<FieldEntity> selectSubsByRoleIds(@Param("roleIds") List<Integer> roleIds);
 
+    /**
+     * 查询角色下某个资源的字段数据 (包含下级角色)
+     *
+     * @param resourceId 资源 Id
+     * @param roleIds    角色 Ids
+     * @return 资源数据
+     */
+    List<FieldEntity> selectSubsByRoleIdsOfResource(@Param("resourceId") Integer resourceId,
+                                                    @Param("roleIds") List<Integer> roleIds);
 
 }

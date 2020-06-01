@@ -3,6 +3,7 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tellus.support.enums.DisplayModeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -99,5 +100,11 @@ public class FieldEntity implements Serializable {
      */
     @TableField("UPDATED_AT")
     private LocalDateTime updatedAt;
+
+    /**
+     * 字段显示模式, 仅在根据角色查询时
+     */
+    @TableField(exist = false)
+    private DisplayModeEnum displayMode;
 
 }
