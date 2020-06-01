@@ -173,6 +173,7 @@ public class FactorKit {
             List<Query> valueQueries = values.stream()
                     .filter(query -> query.factorType != FactorType.OPERATOR)
                     .collect(Collectors.toList());
+
             if (valueQueries.isEmpty() || valueQueries.size() > MULTI_CONDITION_SUPPORTED) {
                 log.warn("Supports up to two conditional queries, fieldName:" + key);
                 return;
@@ -181,6 +182,7 @@ public class FactorKit {
             Query query = valueQueries.get(0);
             Object value = query.getValue();
             OptionType optionType = query.getOptionType();
+
             if (operator.isPresent() && null != operator.get().optionType) {
                 optionType = operator.get().optionType;
             }
@@ -193,56 +195,41 @@ public class FactorKit {
             }
 
             Factor factor = builderFactor(query.factorType);
+            factor.setFieldName(key);
+            factor.setOptionType(optionType);
+            factor.setValue(value);
+
             if (!factor.supported(optionType)) {
                 log.warn("[" + query.factorType + "] Unsupported operation type [" + optionType + "]");
                 return;
             }
-
-            factor.setFieldName(key);
-            factor.setOptionType(optionType);
-            factor.setValue(value);
 
             if (operator.isPresent() || valueQueries.size() != MULTI_CONDITION_SUPPORTED) {
                 factors.add(factor);
                 return;
             }
 
-            Query other = valueQueries.get(1);
-            Object otherValue = other.value;
-            if (null == value && null == otherValue) {
-                return;
-            }
-            if (null == otherValue) {
-                factor.setOptionType(OptionType.GE);
-                factor.setValue(value);
-                factors.add(factor);
-                return;
-            }
-            if (null == value) {
-                factor.setOptionType(OptionType.LE);
-                factor.setValue(otherValue);
-                factors.add(factor);
-                return;
-            }
-
+            Query toQuery = valueQueries.get(1);
             if (factor instanceof MultiFactor && betweenSupported) {
                 MultiFactor multiFactor = (MultiFactor) factor;
                 multiFactor.setOptionType(isBetween(optionType) ? OptionType.BETWEEN : OptionType.NOT_BETWEEN);
+
                 if (optionType == OptionType.BETWEEN
                         || optionType == OptionType.NOT_BETWEEN) {
                     multiFactor.setValue(query.value);
-                    multiFactor.setToValue(otherValue);
+                    multiFactor.setToValue(toQuery.value);
                 } else {
-                    multiFactor.setValue(otherValue);
+                    multiFactor.setValue(toQuery.value);
                     multiFactor.setToValue(query.value);
                 }
                 factors.add(multiFactor);
             } else {
                 factors.add(factor);
-                Factor otherFactor = builderFactor(other.factorType);
+
+                Factor otherFactor = builderFactor(toQuery.factorType);
                 otherFactor.setFieldName(key);
-                otherFactor.setOptionType(other.optionType);
-                otherFactor.setValue(other.value);
+                otherFactor.setOptionType(toQuery.optionType);
+                otherFactor.setValue(toQuery.value);
                 factors.add(otherFactor);
             }
         });
@@ -291,7 +278,6 @@ public class FactorKit {
                     fieldName, info.getClass());
         }
     }
-
 
     public static Method getEnumValueMethod(Class<?> cls) {
         if (IEnum.class.isAssignableFrom(cls)) {
