@@ -5,6 +5,7 @@ import com.tellus.support.enums.basic.OptionType;
 import com.tellus.toolkit.CaseFormatKit;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 多条件因子抽象类

@@ -14,7 +14,6 @@ import java.lang.reflect.Method;
  * @author Roy
  * @date 2020/5/26 10:09
  */
-@Builder
 public class EnumFactor extends AbstractFactor {
 
     @SneakyThrows

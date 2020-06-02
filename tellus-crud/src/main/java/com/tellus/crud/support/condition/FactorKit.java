@@ -161,7 +161,6 @@ public class FactorKit {
         return builderFactor(ImmutableBiMap.of(query.fieldName, Lists.newArrayList(query))).get(0);
     }
 
-    @SuppressWarnings("AlibabaMethodTooLong")
     private static List<Factor> builderFactor(Map<String, List<Query>> queries) {
         List<Factor> factors = new ArrayList<>();
         queries.forEach((key, values) -> {

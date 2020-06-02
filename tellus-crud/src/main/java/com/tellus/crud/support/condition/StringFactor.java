@@ -3,7 +3,6 @@ package com.tellus.crud.support.condition;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tellus.support.enums.basic.OptionType;
 import com.tellus.toolkit.CaseFormatKit;
-import lombok.Builder;
 
 /**
  * 字符穿条件因子
@@ -11,7 +10,6 @@ import lombok.Builder;
  * @author Roy
  * @date 2020/5/26 11:46
  */
-@Builder
 public class StringFactor extends AbstractFactor {
 
     @Override
