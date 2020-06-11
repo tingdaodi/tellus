@@ -32,11 +32,6 @@ public @interface IQueries {
     OptionType option() default OptionType.EQ;
 
     /**
-     * @return 映射字段前缀
-     */
-    String columnPrefix() default "";
-
-    /**
      * @return 排除字段构建条件
      */
     boolean exclude() default false;

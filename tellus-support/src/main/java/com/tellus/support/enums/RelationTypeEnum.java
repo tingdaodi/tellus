@@ -35,6 +35,11 @@ public enum RelationTypeEnum {
      */
     @ISerializedName(value = "4")
     RESOURCE(4),
+    /**
+     * 菜单
+     */
+    @ISerializedName(value = "5")
+    MENU(5),
     ;
 
     @EnumValue

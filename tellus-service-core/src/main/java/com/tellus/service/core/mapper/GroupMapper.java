@@ -1,6 +1,6 @@
 package com.tellus.service.core.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tellus.service.core.BaseRelationMapper;
 import com.tellus.service.core.model.GroupEntity;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Roy.l
  * @since 2020-05-25
  */
-public interface GroupMapper extends BaseMapper<GroupEntity> {
+public interface GroupMapper extends BaseRelationMapper<GroupEntity> {
 
     /**
      * 根据用户 Id, 查询部门

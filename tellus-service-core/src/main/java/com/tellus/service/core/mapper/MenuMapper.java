@@ -1,7 +1,10 @@
 package com.tellus.service.core.mapper;
 
+import com.tellus.service.core.BaseRelationMapper;
 import com.tellus.service.core.model.MenuEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +14,22 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Roy.l
  * @since 2020-05-25
  */
-public interface MenuMapper extends BaseMapper<MenuEntity> {
+public interface MenuMapper extends BaseRelationMapper<MenuEntity> {
+
+    /**
+     * 根据角色Id, 查询菜单
+     *
+     * @param userId 用户Id
+     * @return List<MenuEntity>
+     */
+    List<MenuEntity> selectByUserId(@Param("userId") int userId);
+
+    /**
+     * 根据角色Id, 查询菜单
+     *
+     * @param roleIds 角色 Ids
+     * @return List<MenuEntity>
+     */
+    List<MenuEntity> selectByRoleIds(@Param("roleIds") List<Integer> roleIds);
 
 }

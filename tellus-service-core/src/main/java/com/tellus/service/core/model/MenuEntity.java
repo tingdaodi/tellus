@@ -90,4 +90,9 @@ public class MenuEntity implements Serializable {
     @TableField("UPDATED_AT")
     private LocalDateTime updatedAt;
 
+    /**
+     * 直属上级 Id
+     */
+    @TableField(exist = false)
+    private Integer parentId;
 }

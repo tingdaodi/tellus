@@ -86,6 +86,6 @@ public class GroupEntity implements Serializable {
      * 直属上级 Id
      */
     @TableField(exist = false)
-    private Integer ancestor;
+    private Integer parentId;
 
 }

@@ -54,9 +54,9 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 
         // 需要生成的表
-        // strategy.setInclude("t_user");
+        strategy.setInclude("t_user_platform");
 
-        strategy.setExclude("");
+        //strategy.setExclude("");
 
         strategy.setSuperServiceClass("com.tellus.crud.service.ICustomizeService");
         strategy.setSuperServiceImplClass("com.tellus.crud.service.ICustomizeServiceImpl");

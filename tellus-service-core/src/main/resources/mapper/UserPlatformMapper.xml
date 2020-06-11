@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tellus.service.core.mapper.UserPlatformMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tellus.service.core.model.UserPlatformEntity">
+        <id column="USER_ID" property="userId" />
+        <result column="PLATFORM_ID" property="platformId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, PLATFORM_ID
+    </sql>
+
+</mapper>
