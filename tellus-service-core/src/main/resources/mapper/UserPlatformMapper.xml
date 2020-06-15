@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tellus.service.core.mapper.UserPlatformMapper">
-
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.tellus.service.core.model.UserPlatformEntity">
-        <id column="USER_ID" property="userId" />
-        <result column="PLATFORM_ID" property="platformId" />
+        <id column="USER_ID" property="userId"/>
+        <result column="PLATFORM_ID" property="platformId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -13,4 +12,23 @@
         USER_ID, PLATFORM_ID
     </sql>
 
+    <!-- 根据用户Id, 批量删除用户-平台关系 -->
+    <delete id="deleteBatchUserIds">
+        DELETE
+        FROM t_user_platform
+        WHERE USER_ID IN
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <!-- 根据平台Id, 批量删除用户-平台关系 -->
+    <delete id="deleteBatchPlatformIds">
+        DELETE
+        FROM t_user_platform
+        WHERE USER_ID IN
+        <foreach collection="platformIds" item="platformId" open="(" separator="," close=")">
+            #{platformId}
+        </foreach>
+    </delete>
 </mapper>

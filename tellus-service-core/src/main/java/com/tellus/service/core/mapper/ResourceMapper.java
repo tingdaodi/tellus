@@ -1,5 +1,6 @@
 package com.tellus.service.core.mapper;
 
+import com.tellus.service.core.BaseRelationMapper;
 import com.tellus.service.core.model.ResourceEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Roy.l
  * @since 2020-05-25
  */
-public interface ResourceMapper extends BaseMapper<ResourceEntity> {
+public interface ResourceMapper extends BaseRelationMapper<ResourceEntity> {
+
 
 }

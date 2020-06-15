@@ -22,7 +22,7 @@ public class UserPlatformEntity implements Serializable {
     /**
      * 用户ID 用户ID
      */
-    @TableId("USER_ID")
+    @TableField("USER_ID")
     private Integer userId;
 
     /**

@@ -68,7 +68,7 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
      * @param type       关系类型
      * @param ancestor   上级 Id
      * @param descendant 下级 Id
-     * @return
+     * @return List<Integer>
      */
     @Select({
             "select ancestor from t_relation where type=#{type} and ancestor=#{ancestor} and distance < ",
@@ -137,8 +137,8 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
      * 指定的子节点可能存在子树, 而子树的节点在该节点至上的路径并没有改变,
      * 因此使用该方法后还必须手动修改子树的路径以确保树的连续性
      *
-     * @param type
-     * @param nodeId
+     * @param type   关系类型
+     * @param nodeId 节点Id
      */
     @Delete("delete from t_relation where type=#{type} and descendant=#{nodeid}")
     void deletePath(@Param("type") int type, @Param("nodeId") int nodeId);
