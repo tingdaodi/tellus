@@ -1,7 +1,7 @@
 package com.tellus.service.core.mapper;
 
-import com.tellus.service.core.model.RoleMenuEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tellus.service.core.model.RoleMenuEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,6 +16,13 @@ import java.util.List;
  */
 public interface RoleMenuMapper extends BaseMapper<RoleMenuEntity> {
 
-    int deleteRoleMenuWithSubs(@Param("roleId") Integer roleId, @Param("resourceIds") List<Integer> resourceIds);
+    /**
+     * 根据角色 Id (及下级角色), 菜单 Id 删除角色菜单关系数据
+     *
+     * @param roleId  角色 Id
+     * @param menuIds 菜单 Ids
+     * @return 受影响的行数
+     */
+    int deleteBatchIdsWithSubs(@Param("roleId") Integer roleId, @Param("menuIds") List<Integer> menuIds);
 
 }

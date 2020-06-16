@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 
 /**
- * 关系类型：1-用户，2-部门，3-角色，4-资源
+ * 关系类型：1-用户，2-组织，3-角色，4-资源
  *
  * @author Roy
  * @date 2020/5/17 16:23
@@ -21,7 +21,7 @@ public enum RelationTypeEnum {
     @ISerializedName(value = "1")
     USER(1),
     /**
-     * 部门
+     * 组织
      */
     @ISerializedName(value = "2")
     GROUP(2),

@@ -17,10 +17,10 @@ import java.util.List;
 public interface GroupMapper extends BaseRelationMapper<GroupEntity> {
 
     /**
-     * 根据用户 Id, 查询部门
+     * 根据用户 Id, 查询组织
      *
      * @param userIds 用户 Ids
-     * @return 部门
+     * @return 组织
      */
     List<GroupEntity> selectByUserIds(@Param("userIds") List<Integer> userIds);
 

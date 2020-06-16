@@ -17,7 +17,7 @@ import java.util.List;
 public interface MenuMapper extends BaseRelationMapper<MenuEntity> {
 
     /**
-     * 根据角色Id, 查询菜单
+     * 根据用户Id, 查询菜单
      *
      * @param userId 用户Id
      * @return List<MenuEntity>

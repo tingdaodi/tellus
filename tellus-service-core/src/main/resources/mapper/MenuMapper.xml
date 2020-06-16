@@ -86,12 +86,16 @@
         WHERE R.DISTANCE >= 0
         <if test="roleIds != null and roleIds.size > 0">
             AND R.ANCESTOR IN
-            <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            <foreach collection="roleIds" item="roleId" index="index" open="(" separator="," close=")">
                 #{roleId}
             </foreach>
         </if>
     </select>
     <!-- @formatter:on -->
+
+    <!-- =================================================================================  -->
+    <!--       == Relationship ==     -->
+    <!-- =================================================================================  -->
 
     <!-- 查询指定节点下最深层级的所有子节点 -->
     <select id="selectLowestDistances" resultMap="BaseResultMap">
@@ -127,10 +131,10 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
+        WHERE
           <if test="includeSelf == true">
               AND REL.DISTANCE >= #{distance}
           </if>
@@ -139,7 +143,7 @@
           </if>
           <if test="ancestors != null and ancestors.size > 0">
               AND REL.ANCESTOR IN
-              <foreach collection="ancestors" item="ancestor" open="(" separator="," close=")">
+              <foreach collection="ancestors" item="ancestor" index="index" open="(" separator="," close=")">
                   #{ancestor}
               </foreach>
           </if>
@@ -160,11 +164,10 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
-          AND REL.ANCESTOR = #{ancestor}
+        WHERE REL.ANCESTOR = #{ancestor}
           AND REL.DISTANCE = #{distance}
     </select>
 
@@ -182,11 +185,10 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
-          AND REL.ANCESTOR = #{ancestor}
+        WHERE REL.ANCESTOR = #{ancestor}
           AND REL.DISTANCE <![CDATA[<=]]> #{distance}
     </select>
 
@@ -204,11 +206,10 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
-          AND REL.DESCENDANT = #{descendant}
+        WHERE REL.DESCENDANT = #{descendant}
           AND REL.DISTANCE <![CDATA[<]]>
               (SELECT DISTANCE
                FROM T_RELATION
@@ -232,11 +233,10 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
-          AND REL.DESCENDANT = #{descendant}
+        WHERE REL.DESCENDANT = #{descendant}
           AND REL.DISTANCE = #{distance}
     </select>
 
@@ -254,11 +254,10 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
-          AND REL.DESCENDANT = #{descendant}
+        WHERE REL.DESCENDANT = #{descendant}
           AND REL.DISTANCE <![CDATA[<]]> #{distance}
     </select>
 
@@ -276,9 +275,8 @@
                M.UPDATED_AT,
                R2.ANCESTOR PARENT_ID
         FROM T_RELATION REL
-                     JOIN T_MENU M ON REL.DESCENDANT = M.ID
+                     JOIN T_MENU M ON (REL.DESCENDANT = M.ID AND REL.TYPE = 5)
                      JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 5) R2
                 ON REL.DESCENDANT = R2.DESCENDANT
-        WHERE REL.TYPE = 5
     </select>
 </mapper>

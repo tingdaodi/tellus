@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tellus.service.core.mapper.ResourceMapper">
-
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.tellus.service.core.model.ResourceEntity">
-        <id column="ID" property="id" />
-        <result column="NAME" property="name" />
-        <result column="VALUE" property="value" />
-        <result column="ENABLED" property="enabled" />
-        <result column="REMARK" property="remark" />
-        <result column="SORT" property="sort" />
-        <result column="CREATOR" property="creator" />
-        <result column="CREATED_AT" property="createdAt" />
-        <result column="UPDATER" property="updater" />
-        <result column="UPDATED_AT" property="updatedAt" />
+        <id column="ID" property="id"/>
+        <result column="NAME" property="name"/>
+        <result column="VALUE" property="value"/>
+        <result column="ENABLED" property="enabled"/>
+        <result column="REMARK" property="remark"/>
+        <result column="SORT" property="sort"/>
+        <result column="CREATOR" property="creator"/>
+        <result column="CREATED_AT" property="createdAt"/>
+        <result column="UPDATER" property="updater"/>
+        <result column="UPDATED_AT" property="updatedAt"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -21,4 +20,262 @@
         ID, NAME, VALUE, ENABLED, REMARK, SORT, CREATOR, CREATED_AT, UPDATER, UPDATED_AT
     </sql>
 
+    <!-- 根据 userId 查询菜单 -->
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT DISTINCT R.ID,
+                        R.NAME,
+                        R.VALUE,
+                        R.ENABLED,
+                        R.REMARK,
+                        R.SORT,
+                        R.CREATOR,
+                        R.CREATED_AT,
+                        R.UPDATER,
+                        R.UPDATED_AT,
+                        REL.ANCESTOR PARENT_ID
+        FROM T_RESOURCE R
+                     JOIN T_ROLE_RESOURCE RR ON RR.RESOURCE_ID = R.ID
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) REL
+                ON REL.DESCENDANT = R.ID
+        WHERE ROLE_ID IN (
+                SELECT ROLE_ID
+                FROM (
+                             SELECT U.ID USER_ID, REL.DESCENDANT ROLE_ID
+                             FROM T_RELATION REL
+                                          JOIN T_ROLE R ON REL.DESCENDANT = R.ID AND REL.TYPE = 3
+                                          JOIN T_USER_ROLE UR ON UR.ROLE_ID = R.ID
+                                          JOIN T_USER U ON UR.USER_ID = U.ID
+                             UNION ALL
+                             SELECT U.ID USER_ID, R.ID ROLE_ID
+                             FROM T_USER U,
+                                  T_GROUP_USER GU,
+                                  T_GROUP G,
+                                  T_GROUP_ROLE GR,
+                                  T_ROLE R
+                             WHERE U.ID = GU.USER_ID
+                               AND G.ID = GU.GROUP_ID
+                               AND GR.GROUP_ID = G.ID
+                               AND R.ID = GR.ROLE_ID
+                             ) R2
+                WHERE R2.USER_ID = #{userId})
+    </select>
+
+    <!-- 根据角色ID, 查询资源 -->
+    <!-- @formatter:off -->
+    <select id="selectByRoleIds" resultMap="BaseResultMap">
+        SELECT DISTINCT R.ID,
+                        R.NAME,
+                        R.VALUE,
+                        R.ENABLED,
+                        R.REMARK,
+                        R.SORT,
+                        R.CREATOR,
+                        R.CREATED_AT,
+                        R.UPDATER,
+                        R.UPDATED_AT,
+                        REL.ANCESTOR PARENT_ID
+        FROM T_RESOURCE R
+                     JOIN T_ROLE_RESOURCE RR ON RR.RESOURCE_ID = R.ID
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) REL
+                ON REL.DESCENDANT = R.ID
+                     JOIN (SELECT ANCESTOR, DISTANCE, R.ID
+                           FROM T_RELATION REL
+                                        JOIN T_ROLE R ON R.ID = REL.DESCENDANT AND REL.TYPE = 3) R
+                ON R.ID = RR.ROLE_ID
+        WHERE R.DISTANCE >= 0
+        <if test="roleIds != null and roleIds.size > 0">
+            AND R.ANCESTOR IN
+            <foreach collection="roleIds" item="roleId" index="index" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+        </if>
+    </select>
+    <!-- @formatter:on -->
+
+    <!-- =================================================================================  -->
+    <!--       == Relationship ==     -->
+    <!-- =================================================================================  -->
+
+    <!-- 查询指定节点下最深层级的所有子节点 -->
+    <select id="selectLowestDistances" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT
+        FROM T_RELATION REL
+                     JOIN (SELECT ANCESTOR, MAX(DISTANCE) DISTANCE FROM T_RELATION WHERE TYPE = 4 GROUP BY ANCESTOR) R2
+                ON REL.ANCESTOR = R2.ANCESTOR AND REL.DISTANCE = R2.DISTANCE
+                     JOIN T_RESOURCE R ON REL.DESCENDANT = R.ID
+        WHERE REL.ANCESTOR = #{ancestor}
+    </select>
+
+    <!-- 查询节点 #{ancestor} 的所有子级 -->
+    <!-- @formatter:off -->
+    <select id="selectSubs" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+        WHERE
+          <if test="includeSelf == true">
+              AND REL.DISTANCE >= #{distance}
+          </if>
+          <if test="includeSelf == false">
+              AND REL.DISTANCE > #{distance}
+          </if>
+          <if test="ancestors != null and ancestors.size > 0">
+              AND REL.ANCESTOR IN
+              <foreach collection="ancestors" item="ancestor" index="index" open="(" separator="," close=")">
+                  #{ancestor}
+              </foreach>
+          </if>
+    </select>
+    <!-- @formatter:on -->
+
+    <!-- 查询 #{ancestor} 第 #{distance} 层的所有节点 -->
+    <select id="selectByDistance" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+        WHERE REL.ANCESTOR = #{ancestor}
+          AND REL.DISTANCE = #{distance}
+    </select>
+
+    <!-- 查询 #{ancestor} 上级到第 #{distance} 层之间的所有节点 -->
+    <select id="selectPathSubs" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+        WHERE REL.ANCESTOR = #{ancestor}
+          AND REL.DISTANCE <![CDATA[<=]]> #{distance}
+    </select>
+
+    <!-- 查询 #{ancestor} (不含) 与 #{descendant} 之间所有的节点 -->
+    <select id="selectPathToAncestor" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+        WHERE REL.DESCENDANT = #{descendant}
+          AND REL.DISTANCE <![CDATA[<]]>
+              (SELECT DISTANCE
+               FROM T_RELATION
+               WHERE REL.TYPE = 4
+                 AND DESCENDANT = #{descendant}
+                 AND ANCESTOR = #{ancestor})
+        ORDER BY DISTANCE DESC
+    </select>
+
+    <!-- 查询 #{descendant} 往上第 #{distance} 层的父节点 -->
+    <select id="selectParent" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+        WHERE REL.DESCENDANT = #{descendant}
+          AND REL.DISTANCE = #{distance}
+    </select>
+
+    <!-- 查询 #{descendant} 往上到第 #{distance} 层父节点之间的所有节点 -->
+    <select id="selectPathParents" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+        WHERE REL.DESCENDANT = #{descendant}
+          AND REL.DISTANCE <![CDATA[<]]> #{distance}
+    </select>
+
+    <!-- 根据条件分页查询, 返回直属上级 Id -->
+    <select id="selectWithAncestorPage" resultMap="BaseResultMap">
+        SELECT R.ID,
+               R.NAME,
+               R.VALUE,
+               R.ENABLED,
+               R.REMARK,
+               R.SORT,
+               R.CREATOR,
+               R.CREATED_AT,
+               R.UPDATER,
+               R.UPDATED_AT,
+               R2.ANCESTOR PARENT_ID
+        FROM T_RELATION REL
+                     JOIN T_RESOURCE R ON (REL.DESCENDANT = R.ID AND REL.TYPE = 4)
+                     JOIN (SELECT ANCESTOR, DESCENDANT FROM T_RELATION WHERE DISTANCE = 1 AND TYPE = 4) R2
+                ON REL.DESCENDANT = R2.DESCENDANT
+    </select>
 </mapper>

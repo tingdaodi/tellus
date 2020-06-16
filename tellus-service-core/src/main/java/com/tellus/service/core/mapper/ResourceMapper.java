@@ -2,7 +2,9 @@ package com.tellus.service.core.mapper;
 
 import com.tellus.service.core.BaseRelationMapper;
 import com.tellus.service.core.model.ResourceEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +16,19 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ResourceMapper extends BaseRelationMapper<ResourceEntity> {
 
+    /**
+     * 根据角色Id, 查询资源
+     *
+     * @param userId 用户Id
+     * @return List
+     */
+    List<ResourceEntity> selectByUserId(@Param("userId") int userId);
 
+    /**
+     * 根据角色Id, 查询资源
+     *
+     * @param roleIds 角色 Ids
+     * @return List
+     */
+    List<ResourceEntity> selectByRoleIds(@Param("roleIds") List<Integer> roleIds);
 }

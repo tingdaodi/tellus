@@ -1,11 +1,7 @@
 package com.tellus.service.core.mapper;
 
-import com.tellus.service.core.model.PlatformEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+import com.tellus.service.core.model.PlatformEntity;
 
 /**
  * <p>
@@ -16,6 +12,5 @@ import java.util.List;
  * @since 2020-05-25
  */
 public interface PlatformMapper extends BaseMapper<PlatformEntity> {
-
 
 }

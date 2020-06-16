@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tellus.service.core.mapper.RoleResourceMapper">
-
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.tellus.service.core.model.RoleResourceEntity">
-        <id column="ROLE_ID" property="roleId" />
-        <result column="RESOURCE_ID" property="resourceId" />
+        <id column="ROLE_ID" property="roleId"/>
+        <result column="RESOURCE_ID" property="resourceId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -13,4 +12,16 @@
         ROLE_ID, RESOURCE_ID
     </sql>
 
+    <!-- 批量删除角色-资源关系, 下级角色一并删除 -->
+    <delete id="deleteBatchIdsWithSubs">
+        DELETE
+        FROM T_ROLE_RESOURCE
+        WHERE ROLE_ID IN (SELECT DESCENDANT FROM T_RELATION WHERE TYPE = 3 AND ANCESTOR = #{roleId})
+        <if test=" resourceIds != null and resourceIds.size > 0">
+            AND RESOURCE_ID IN
+            <foreach collection="resourceIds" index="index" item="resourceIds" open="(" close=")" separator=",">
+                #{resourceId}
+            </foreach>
+        </if>
+    </delete>
 </mapper>

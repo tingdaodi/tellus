@@ -13,13 +13,15 @@
     </sql>
 
     <!-- 批量删除角色-资源关系, 下级角色一并删除 -->
-    <delete id="deleteRoleMenuWithSubs">
+    <delete id="deleteBatchIdsWithSubs">
         DELETE
-        FROM T_ROLE_RESOURCE
+        FROM T_ROLE_MENU
         WHERE ROLE_ID IN (SELECT DESCENDANT FROM T_RELATION WHERE TYPE = 3 AND ANCESTOR = #{roleId})
-        AND RESOURCE_ID IN
-        <foreach collection="resourceIds" index="index" item="resourceId" open="(" close=")" separator=",">
-            #{resourceId}
-        </foreach>
+        <if test=" menuIds != null and menuIds.size > 0">
+            AND MENU_ID IN
+            <foreach collection="menuIds" index="index" item="menuId" open="(" close=")" separator=",">
+                #{menuId}
+            </foreach>
+        </if>
     </delete>
 </mapper>
