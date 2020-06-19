@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.tellus.support.enums.UserStatusEnum;
+import com.tellus.support.enums.UserTypeEnum;
+import com.tellus.support.enums.basic.Gender;
+import com.tellus.support.enums.basic.Language;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,19 +62,19 @@ public class UserEntity implements Serializable {
      * 性别 1-男，2-女；默认：1
      */
     @TableField("GENDER")
-    private Integer gender;
+    private Gender gender;
 
     /**
      * 用户类型 1-内部用户，2-外部用户；默认：1
      */
     @TableField("USER_TYPE")
-    private Integer userType;
+    private UserTypeEnum userType;
 
     /**
      * 状态 1-正常，2-禁用；默认：1
      */
     @TableField("STATUS")
-    private Integer status;
+    private UserStatusEnum status;
 
     /**
      * 邮箱 邮箱地址
@@ -106,7 +110,7 @@ public class UserEntity implements Serializable {
      * 使用语言 使用语言
      */
     @TableField("LANGUAGE")
-    private Integer language;
+    private Language language;
 
     /**
      * 注册IP地址 注册地址
