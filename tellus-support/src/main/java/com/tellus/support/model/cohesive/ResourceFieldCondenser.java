@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 资源-字段聚合 POJO
@@ -33,4 +34,5 @@ public class ResourceFieldCondenser implements Serializable {
     private LocalDateTime updatedAt;
     private Integer parentId;
 
+    private List<FieldCohesive> fields;
 }

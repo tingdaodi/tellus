@@ -9,22 +9,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 用户聚合的 POJO (用于授权认证)
+ * 用户
  *
  * @author Roy
- * @date 2020/6/16 1:37
+ * @date 2020/6/22 11:46
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetailsCondenser implements Serializable {
-    private static final long serialVersionUID = 5361178667181056491L;
+public class SystemUserCondenser {
 
     private Integer id;
     private String username;

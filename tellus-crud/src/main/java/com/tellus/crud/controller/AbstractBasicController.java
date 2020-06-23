@@ -82,7 +82,7 @@ public abstract class AbstractBasicController<T> {
             T entity = this.dozerGenerator.convert(info, entityClass);
             wrapper = Wrappers.query(entity);
         } else {
-            wrapper = FactorKit.builderQueryWrapper(info, entityClass);
+            wrapper = FactorKit.builderQueryWrapper(info);
         }
 
         return wrapper;

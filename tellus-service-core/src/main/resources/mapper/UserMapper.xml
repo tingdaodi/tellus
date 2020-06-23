@@ -27,10 +27,129 @@
         <result column="DELETED" property="deleted"/>
     </resultMap>
 
+    <!-- 用户详情映射结果 -->
+    <resultMap id="UserBaseResultMap" extends="BaseResultMap"
+               type="com.tellus.support.model.cohesive.UserDetailsCondenser">
+        <!-- 所属平台 -->
+        <collection property="platforms" columnPrefix="PLATFORM_"
+                    ofType="com.tellus.support.model.cohesive.PlatformCohesive">
+            <id column="ID" property="platformId"/>
+            <result column="NAME" property="platformName"/>
+            <result column="CODE" property="platformCode"/>
+            <result column="ENABLED" property="platformEnabled"/>
+        </collection>
+        <!-- 所属部门 -->
+        <collection property="groups" columnPrefix="GROUP_"
+                    ofType="com.tellus.support.model.cohesive.GroupCohesive">
+            <id column="ID" property="groupId"/>
+            <result column="NAME" property="groupName"/>
+            <result column="CODE" property="groupCode"/>
+            <result column="ENABLED" property="groupEnabled"/>
+            <result column="REMARK" property="groupRemark"/>
+        </collection>
+        <!-- 角色 -->
+        <collection property="roles" columnPrefix="ROLE_"
+                    ofType="com.tellus.support.model.cohesive.RoleCohesive">
+            <id column="ID" property="roleId"/>
+            <result column="NAME" property="roleName"/>
+            <result column="ROLE" property="role"/>
+            <result column="REMARK" property="roleRemark"/>
+            <result column="ENABLED" property="roleEnabled"/>
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         ID, USERNAME, PASSWORD, NICKNAME, GENDER, USER_TYPE, STATUS, EMAIL, PHONE, OFFICE_PHONE, BIRTHDAY, AVATAR, LANGUAGE, IP_ADDRESS, LAST_LOGIN_TIME, LAST_LOGIN_IP, REMARKS, CREATOR, CREATED_AT, UPDATER, UPDATED_AT, DELETED
     </sql>
+
+    <!-- 根据用户名, 查询用户详细信息 (仅用于授权认证) -->
+    <select id="selectUserDetails" resultMap="UserBaseResultMap">
+        SELECT U.ID,
+               U.USERNAME,
+               U.PASSWORD,
+               U.NICKNAME,
+               U.GENDER,
+               U.USER_TYPE,
+               U.STATUS,
+               U.EMAIL,
+               U.PHONE,
+               U.OFFICE_PHONE,
+               U.BIRTHDAY,
+               U.AVATAR,
+               U.LANGUAGE,
+               U.IP_ADDRESS,
+               U.LAST_LOGIN_TIME,
+               U.LAST_LOGIN_IP,
+               U.REMARKS,
+               U.CREATOR,
+               U.CREATED_AT,
+               U.UPDATER,
+               U.UPDATED_AT,
+
+               P.ID      PLATFORM_ID,
+               P.NAME    PLATFORM_NAME,
+               P.CODE    PLATFORM_CODE,
+               P.ENABLED PLATFORM_ENABLED,
+
+               G.ID      GROUP_ID,
+               G.NAME    GROUP_NAME,
+               G.CODE    GROUP_CODE,
+               G.ENABLED GROUP_ENABLED,
+               G.REMARK  GROUP_REMARK,
+
+               R.ID      ROLE_ID,
+               R.NAME    ROLE_NAME,
+               R.ROLE    ROLE_ROLE,
+               R.REMARK  ROLE_REMARK,
+               R.ENABLED ROLE_ENABLED
+        FROM T_USER U
+                     LEFT JOIN (SELECT USER_ID,
+                                       PLATFORM_ID,
+                                       ID,
+                                       NAME,
+                                       CODE,
+                                       ENABLED
+                                FROM T_USER_PLATFORM UP
+                                             JOIN T_PLATFORM P ON UP.PLATFORM_ID = P.ID) P ON P.USER_ID = U.ID
+                     LEFT JOIN (SELECT GROUP_ID,
+                                       USER_ID,
+                                       ID,
+                                       NAME,
+                                       CODE,
+                                       ENABLED,
+                                       REMARK
+                                FROM T_GROUP_USER GU
+                                             JOIN T_GROUP G ON GU.GROUP_ID = G.ID) G
+                ON G.USER_ID = U.ID
+                     LEFT JOIN (SELECT USER_ID,
+                                       ID,
+                                       NAME,
+                                       ROLE,
+                                       REMARK,
+                                       ENABLED
+                                FROM T_USER_ROLE UR
+                                             JOIN T_ROLE R ON UR.ROLE_ID = R.ID
+                                UNION
+
+                                SELECT U.ID,
+                                       R.ID,
+                                       R.NAME,
+                                       R.ROLE,
+                                       R.REMARK,
+                                       R.ENABLED
+                                FROM T_USER U,
+                                     T_GROUP_USER GU,
+                                     T_GROUP G,
+                                     T_GROUP_ROLE GR,
+                                     T_ROLE R
+                                WHERE U.ID = GU.USER_ID
+                                  AND G.ID = GU.GROUP_ID
+                                  AND G.ID = GR.GROUP_ID
+                                  AND R.ID = GR.ROLE_ID) R
+                ON R.USER_ID = U.ID
+        WHERE U.USERNAME = #{username}
+    </select>
 
     <!-- 根据组织 Id 查询用户 -->
     <select id="selectByGroupIds" resultMap="BaseResultMap">
@@ -43,8 +162,4 @@
             #{groupId}
         </foreach>
     </select>
-
-
-
-
 </mapper>

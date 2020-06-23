@@ -2,6 +2,9 @@ package com.tellus.service.core.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tellus.service.core.model.PlatformEntity;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,13 @@ import com.tellus.service.core.model.PlatformEntity;
  * @since 2020-05-25
  */
 public interface PlatformMapper extends BaseMapper<PlatformEntity> {
+
+    /**
+     * 根据用户 Id, 查询产品信息
+     *
+     * @param userIds 用户 Ids
+     * @return List<PlatformEntity>
+     */
+    List<PlatformEntity> selectByUserIds(@Param("userIds") List<Integer> userIds);
 
 }

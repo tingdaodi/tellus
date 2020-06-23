@@ -18,6 +18,15 @@
         ID, NAME, CODE, ENABLED, CREATOR, CREATED_AT, UPDATER, UPDATED_AT
     </sql>
 
-
-
+    <!-- 根据用户 Id, 查询产品信息 -->
+    <select id="selectByUserIds" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM T_PLATFORM P
+        LEFT JOIN T_USER_PLATFORM UP on P.ID = UP.PLATFORM_ID
+        WHERE UP.USER_ID IN
+        <foreach collection="userIds" item="userId" index="index" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </select>
 </mapper>

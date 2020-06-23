@@ -1,9 +1,9 @@
 package com.tellus.service.core.service.single.impl;
 
-import com.tellus.service.core.model.GroupRoleEntity;
-import com.tellus.service.core.mapper.GroupRoleMapper;
-import com.tellus.service.core.service.GroupRoleService;
 import com.tellus.crud.service.ICustomizeServiceImpl;
+import com.tellus.service.core.mapper.GroupRoleMapper;
+import com.tellus.service.core.model.GroupRoleEntity;
+import com.tellus.service.core.service.single.GroupRoleService;
 import org.springframework.stereotype.Service;
 
 /**

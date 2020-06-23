@@ -20,10 +20,10 @@ import java.io.Serializable;
 public class RoleCohesive implements Serializable {
     private static final long serialVersionUID = -3365785026980837497L;
 
-    private Integer id;
-    private String name;
+    private Integer roleId;
+    private String roleName;
     private String role;
-    private String remark;
-    private Integer enabled;
+    private String roleRemark;
+    private Integer roleEnabled;
 
 }
