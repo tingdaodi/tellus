@@ -10,7 +10,7 @@ import com.tellus.support.PageWrapper;
  * @author Roy
  * @date 2020/5/21 12:59
  */
-public class PageDozerGenerator extends DozerGenerator implements IPageHelperGenerator {
+public class PageDozerGenerator extends DozerGenerator implements IPageGenerator {
 
     @Override
     public <T, V, S extends IPage<T>> PageWrapper<V> convert(S src, Class<V> clz) {

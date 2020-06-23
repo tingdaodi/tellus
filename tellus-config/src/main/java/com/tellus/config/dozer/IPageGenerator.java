@@ -10,7 +10,7 @@ import com.tellus.support.PageWrapper;
  * @author Roy
  * @date 2020/5/21 12:37
  */
-public interface IPageHelperGenerator {
+public interface IPageGenerator extends IGenerator {
 
     /**
      * (分页) IPage -> PageWrapper
