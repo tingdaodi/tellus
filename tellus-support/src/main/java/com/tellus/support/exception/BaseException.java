@@ -103,6 +103,7 @@ public class BaseException extends RuntimeException {
     }
 
     // ~ Supplier 表达式
+    // ~ =========================================================================
 
     public BaseException(IErrorCode errorCode, Supplier<String> descriptionSupplier) {
         super(descriptionSupplier.get());

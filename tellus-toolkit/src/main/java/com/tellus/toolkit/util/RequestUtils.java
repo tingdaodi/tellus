@@ -25,9 +25,6 @@ public class RequestUtils {
         String userAgentString = request.getHeader(HttpHeaders.USER_AGENT);
         UserAgent userAgent = UserAgentUtil.parse(userAgentString);
 
-        String serverName = request.getServerName();
-        String domainName = serverName.replaceAll("^www\\.", "");
-
         return RequestInfo.builder()
                 .mobile(userAgent.isMobile())
                 .ipAddress(curIp)

@@ -1,6 +1,6 @@
 package com.tellus.config.requestinfo;
 
-import com.tellus.support.annotation.IRequestInfo;
+import com.tellus.support.annotation.GetRequestInfo;
 import com.tellus.toolkit.util.RequestUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.NonNull;
@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Roy
  * @date 2020/5/19 12:37
- * @see com.tellus.support.annotation.IRequestInfo
+ * @see GetRequestInfo
  * @see com.tellus.support.RequestInfo
  */
 public class RequestInfoArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(IRequestInfo.class);
+        return parameter.hasParameterAnnotation(GetRequestInfo.class);
     }
 
     @Override

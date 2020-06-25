@@ -23,6 +23,8 @@
         <module>../tellus-support</module>
         <module>../tellus-toolkit</module>
         <module>../tellus-mybatis-generator-starter</module>
+        <module>../tellus-permission-web-starter</module>
+        <module>../tellus-permission-cloud-starter</module>
     </modules>
 
     <developers>
