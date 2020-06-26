@@ -1,4 +1,4 @@
-package com.tellus.service.core;
+package com.tellus.crud.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -19,16 +19,13 @@ public interface BaseRelationMapper<T> extends BaseMapper<T> {
     /**
      * 查询 #{ancestors} 的第 #{distance} 层的所有子级
      * <p>
-     * {@code distance == null} 查询所有子级
      * {@code includeSelf == null || includeSelf == false} 不包含 #{ancestors}
      *
      * @param ancestors   上级 Id
-     * @param distance    层级
      * @param includeSelf 包含自身 #{ancestor}
      * @return List<T>
      */
     List<T> selectSubs(@Param("ancestors") List<Integer> ancestors,
-                       @Param("distance") int distance,
                        @Param("includeSelf") boolean includeSelf);
 
     /**

@@ -134,10 +134,10 @@
                 ON REL.DESCENDANT = R2.DESCENDANT
         WHERE
           <if test="includeSelf == true">
-              AND REL.DISTANCE >= #{distance}
+              AND REL.DISTANCE >= 0
           </if>
           <if test="includeSelf == false">
-              AND REL.DISTANCE > #{distance}
+              AND REL.DISTANCE > 0
           </if>
           <if test="ancestors != null and ancestors.size > 0">
               AND REL.ANCESTOR IN

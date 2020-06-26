@@ -1,6 +1,6 @@
 package com.tellus.service.core.mapper;
 
-import com.tellus.service.core.BaseRelationMapper;
+import com.tellus.crud.service.BaseRelationMapper;
 import com.tellus.service.core.model.ResourceEntity;
 import org.apache.ibatis.annotations.Param;
 

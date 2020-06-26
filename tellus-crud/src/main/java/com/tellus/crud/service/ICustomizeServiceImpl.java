@@ -7,7 +7,7 @@ import com.tellus.crud.support.EntityUtil;
 import java.util.function.Supplier;
 
 /**
- * 自定义: IService 实现类
+ * 自定义: ICustomizeService 拓展实现类
  *
  * @author Roy
  * @date 2020/5/25 22:51
