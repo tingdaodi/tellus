@@ -1,9 +1,9 @@
 package com.tellus.service.core.service.single.impl;
 
-import com.tellus.service.core.model.RoleEntity;
+import com.tellus.crud.service.ICustomizeRelationServiceImpl;
 import com.tellus.service.core.mapper.RoleMapper;
+import com.tellus.service.core.model.RoleEntity;
 import com.tellus.service.core.service.single.RoleService;
-import com.tellus.crud.service.ICustomizeServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-05-29
  */
 @Service
-public class RoleServiceImpl extends ICustomizeServiceImpl<RoleMapper, RoleEntity> implements RoleService {
+public class RoleServiceImpl extends ICustomizeRelationServiceImpl<RoleMapper, RoleEntity> implements RoleService {
 
 }

@@ -1,9 +1,9 @@
 package com.tellus.service.core.service.single.impl;
 
-import com.tellus.service.core.model.ResourceEntity;
+import com.tellus.crud.service.ICustomizeRelationServiceImpl;
 import com.tellus.service.core.mapper.ResourceMapper;
+import com.tellus.service.core.model.ResourceEntity;
 import com.tellus.service.core.service.single.ResourceService;
-import com.tellus.crud.service.ICustomizeServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2020-05-29
  */
 @Service
-public class ResourceServiceImpl extends ICustomizeServiceImpl<ResourceMapper, ResourceEntity> implements ResourceService {
+public class ResourceServiceImpl extends ICustomizeRelationServiceImpl<ResourceMapper, ResourceEntity> implements ResourceService {
 
 }
