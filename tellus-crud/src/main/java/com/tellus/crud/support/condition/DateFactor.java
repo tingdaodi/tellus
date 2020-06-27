@@ -1,7 +1,5 @@
 package com.tellus.crud.support.condition;
 
-import com.tellus.support.enums.basic.OptionType;
-
 /**
  * 布尔条件因子 (仅支持 =EQ)
  *

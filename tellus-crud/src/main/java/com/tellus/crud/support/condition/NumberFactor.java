@@ -1,8 +1,5 @@
 package com.tellus.crud.support.condition;
 
-import com.tellus.support.enums.basic.OptionType;
-import lombok.NoArgsConstructor;
-
 /**
  * 数字条件因子
  *
