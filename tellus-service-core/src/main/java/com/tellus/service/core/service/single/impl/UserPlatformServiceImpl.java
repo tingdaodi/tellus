@@ -1,10 +1,13 @@
 package com.tellus.service.core.service.single.impl;
 
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.tellus.crud.service.ICustomizeServiceImpl;
 import com.tellus.service.core.mapper.UserPlatformMapper;
 import com.tellus.service.core.model.UserPlatformEntity;
 import com.tellus.service.core.service.single.UserPlatformService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserPlatformServiceImpl extends ICustomizeServiceImpl<UserPlatformMapper, UserPlatformEntity> implements UserPlatformService {
 
+    @Override
+    public boolean removeBatchUserIds(List<Integer> userIds) {
+        return SqlHelper.retBool(baseMapper.deleteBatchUserIds(userIds));
+    }
+
+    @Override
+    public boolean removeBatchPlatformIds(List<Integer> platformIds) {
+        return SqlHelper.retBool(baseMapper.deleteBatchPlatformIds(platformIds));
+    }
 }

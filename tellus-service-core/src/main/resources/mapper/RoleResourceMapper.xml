@@ -19,7 +19,7 @@
         WHERE ROLE_ID IN (SELECT DESCENDANT FROM T_RELATION WHERE TYPE = 3 AND ANCESTOR = #{roleId})
         <if test=" resourceIds != null and resourceIds.size > 0">
             AND RESOURCE_ID IN
-            <foreach collection="resourceIds" index="index" item="resourceIds" open="(" close=")" separator=",">
+            <foreach collection="resourceIds" index="index" item="resourceId" open="(" close=")" separator=",">
                 #{resourceId}
             </foreach>
         </if>

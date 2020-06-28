@@ -3,6 +3,7 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.tellus.support.enums.DisplayModeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,6 +44,6 @@ public class RoleFieldEntity implements Serializable {
      * 显示模式 默认：1；1-全显示，2-半显示，3-隐藏
      */
     @TableField("DISPLAY_MODE")
-    private Integer displayMode;
+    private DisplayModeEnum displayMode;
 
 }

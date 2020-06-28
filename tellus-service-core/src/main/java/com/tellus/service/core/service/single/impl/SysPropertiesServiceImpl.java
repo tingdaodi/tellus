@@ -1,9 +1,9 @@
 package com.tellus.service.core.service.single.impl;
 
-import com.tellus.service.core.model.SysPropertiesEntity;
-import com.tellus.service.core.mapper.SysPropertiesMapper;
-import com.tellus.service.core.service.single.SysPropertiesService;
 import com.tellus.crud.service.ICustomizeServiceImpl;
+import com.tellus.service.core.mapper.SysPropertiesMapper;
+import com.tellus.service.core.model.SysPropertiesEntity;
+import com.tellus.service.core.service.single.SysPropertiesService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysPropertiesServiceImpl extends ICustomizeServiceImpl<SysPropertiesMapper, SysPropertiesEntity> implements SysPropertiesService {
 
+    @Override
+    public SysPropertiesEntity selectByKey(String key) {
+        return baseMapper.selectByKey(key);
+    }
 }

@@ -33,5 +33,4 @@ public interface UserMapper extends BaseMapper<UserEntity> {
      */
     List<UserEntity> selectByGroupIds(@Param("groupIds") List<Integer> groupIds);
 
-
 }

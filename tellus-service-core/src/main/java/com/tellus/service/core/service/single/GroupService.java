@@ -2,7 +2,8 @@ package com.tellus.service.core.service.single;
 
 import com.tellus.crud.service.ICustomizeRelationService;
 import com.tellus.service.core.model.GroupEntity;
-import com.tellus.crud.service.ICustomizeService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,5 +14,13 @@ import com.tellus.crud.service.ICustomizeService;
  * @since 2020-05-29
  */
 public interface GroupService extends ICustomizeRelationService<GroupEntity> {
+
+    /**
+     * 根据用户 Id, 查询组织
+     *
+     * @param userIds 用户 Ids
+     * @return 组织
+     */
+    List<GroupEntity> findByUserIds(List<Integer> userIds);
 
 }

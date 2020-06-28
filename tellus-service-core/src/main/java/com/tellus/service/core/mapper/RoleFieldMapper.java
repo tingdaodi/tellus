@@ -23,7 +23,7 @@ public interface RoleFieldMapper extends BaseMapper<RoleFieldEntity> {
      * @param fieldIds 字段IDs
      * @return 受影响的行数
      */
-    int deleteBatchWithSubs(@Param("roleId") Integer roleId, @Param("fieldIds") List<Integer> fieldIds);
+    int deleteBatchWithSubs(@Param("roleId") int roleId, @Param("fieldIds") List<Integer> fieldIds);
 
     /**
      * 批量更新角色-字段关系数据, (下级角色同步修改)

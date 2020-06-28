@@ -111,7 +111,7 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
     Integer selectDistance(@Param("type") int type, @Param("ancestor") int ancestor, @Param("descendant") int descendant);
 
     /**
-     * 将 #{descendant} 插入到 #{ancestor}
+     * 将 #{descendant} 插入到 #{ancestor}, 保存完整路径
      *
      * @param type       关系类型
      * @param ancestor   上级 Id

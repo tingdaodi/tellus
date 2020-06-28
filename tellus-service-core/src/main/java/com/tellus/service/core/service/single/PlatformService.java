@@ -2,6 +2,9 @@ package com.tellus.service.core.service.single;
 
 import com.tellus.service.core.model.PlatformEntity;
 import com.tellus.crud.service.ICustomizeService;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,13 @@ import com.tellus.crud.service.ICustomizeService;
  * @since 2020-05-29
  */
 public interface PlatformService extends ICustomizeService<PlatformEntity> {
+
+    /**
+     * 根据用户 Id, 查询产品信息
+     *
+     * @param userIds 用户 Ids
+     * @return List<PlatformEntity>
+     */
+    List<PlatformEntity> findByUserIds(List<Integer> userIds);
 
 }

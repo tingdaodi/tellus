@@ -6,6 +6,8 @@ import com.tellus.service.core.model.GroupEntity;
 import com.tellus.service.core.service.single.GroupService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 组织表 组织信息 服务实现类
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class GroupServiceImpl extends ICustomizeRelationServiceImpl<GroupMapper, GroupEntity> implements GroupService {
 
+    @Override
+    public List<GroupEntity> findByUserIds(List<Integer> userIds) {
+        return baseMapper.selectByUserIds(userIds);
+    }
 }

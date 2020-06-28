@@ -22,10 +22,8 @@ public interface SysPropertiesMapper extends BaseMapper<SysPropertiesEntity> {
      * @return SysPropertiesEntity
      */
     @Select({
-            "<script>",
-            "   select id, `key`, value, enabled, remark, creator, created_at, updated_by, updated_at from t_sys_properties ",
-            "   where `key` = #{key} ",
-            "</script> "
+            "select id, `key`, value, enabled, remark, creator, created_at, updated_by, updated_at from t_sys_properties ",
+            "where `key` = #{key} "
     })
     SysPropertiesEntity selectByKey(@Param("key") String key);
 

@@ -6,6 +6,8 @@ import com.tellus.service.core.model.RoleEntity;
 import com.tellus.service.core.service.single.RoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色表 角色信息 服务实现类
@@ -17,4 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleServiceImpl extends ICustomizeRelationServiceImpl<RoleMapper, RoleEntity> implements RoleService {
 
+    @Override
+    public List<RoleEntity> findByUserIds(List<Integer> userIds) {
+        return baseMapper.selectByUserIds(userIds);
+    }
+
+    @Override
+    public List<RoleEntity> findByGroupIds(List<Integer> groupIds) {
+        return baseMapper.selectByGroupIds(groupIds);
+    }
 }
