@@ -1,6 +1,6 @@
 package com.tellus.web.service;
 
-import com.tellus.service.core.model.LoginLogEntity;
+import com.tellus.support.model.vo.create.CreateLoginLogVO;
 
 /**
  * 认证/授权, 通用服务接口
@@ -10,6 +10,12 @@ import com.tellus.service.core.model.LoginLogEntity;
  */
 public interface SystemAuthService {
 
-    boolean loginSuccessAfter(LoginLogEntity entity);
+    /**
+     * 登录成功后, 写入登录日志,
+     *
+     * @param vo
+     * @return
+     */
+    boolean loginSuccessAfter(CreateLoginLogVO vo);
 
 }
