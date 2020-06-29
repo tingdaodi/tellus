@@ -16,4 +16,5 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"com.tellus"})
 @EnableConfigurationProperties(TellusWebProperties.class)
 public class TellusWebConfiguration {
+
 }
