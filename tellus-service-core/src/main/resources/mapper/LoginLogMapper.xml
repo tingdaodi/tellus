@@ -7,6 +7,7 @@
         <id column="ID" property="id" />
         <result column="USERNAME" property="username" />
         <result column="LOGIN_TIME" property="loginTime" />
+        <result column="CLIENT_IP" property="clientIp" />
         <result column="CLIENT_HOST" property="clientHost" />
         <result column="CLIENT_MAC" property="clientMac" />
         <result column="DEVICE" property="device" />
@@ -17,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        ID, USERNAME, LOGIN_TIME, CLIENT_HOST, CLIENT_MAC, DEVICE, USER_AGENT, REFERER, SICCESSFUL
+        ID, USERNAME, LOGIN_TIME, CLIENT_IP, CLIENT_HOST, CLIENT_MAC, DEVICE, USER_AGENT, REFERER, SICCESSFUL
     </sql>
 
 </mapper>

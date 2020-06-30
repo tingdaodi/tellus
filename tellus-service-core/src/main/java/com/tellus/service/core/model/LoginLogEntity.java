@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -43,10 +44,16 @@ public class LoginLogEntity implements Serializable {
      * 登录时间 登录时间
      */
     @TableField("LOGIN_TIME")
-    private String loginTime;
+    private LocalDateTime loginTime;
 
     /**
-     * 客户端IP/HOST 客户端IP/HOST
+     * 客户端IP
+     */
+    @TableField("CLIENT_IP")
+    private String clientIp;
+
+    /**
+     * 客户端HOST
      */
     @TableField("CLIENT_HOST")
     private String clientHost;

@@ -1,5 +1,6 @@
-package com.tellus.support.model.vo.create;
+package com.tellus.support.model.vo.result;
 
+import com.tellus.support.annotation.IExpose;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -7,38 +8,36 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 创建登录日志VO
+ * 登录日志VO
  *
  * @author Roy
- * @date 2020/6/29 9:51
+ * @date 2020/6/30 12:01
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "创建登录日志VO")
-public class CreateLoginLogVO implements Serializable {
-    private static final long serialVersionUID = 6350369709775242156L;
+@ApiModel(description = "登录日志VO")
+public class LoginLogVO implements Serializable {
+    private static final long serialVersionUID = 6609481315946835707L;
 
-    @NotEmpty(message = "用户名不能为空")
+    @IExpose
+    @ApiModelProperty(value = "ID", example = "10000")
+    private Integer id;
+
     @ApiModelProperty(value = "用户名", example = "user001")
     private String username;
 
-    @NotNull(message = "登录时间不能为空")
     @ApiModelProperty(value = "登录时间", example = "2020-07-01 00:00:00")
     private LocalDateTime loginTime;
 
-    @NotEmpty(message = "客户端IP不能为空")
     @ApiModelProperty(value = "客户端IP", example = "127.0.0.1")
     private String clientIp;
 
-    @NotEmpty(message = "客户端HOST不能为空")
     @ApiModelProperty(value = "客户端HOST", example = "localhost")
     private String clientHost;
 
