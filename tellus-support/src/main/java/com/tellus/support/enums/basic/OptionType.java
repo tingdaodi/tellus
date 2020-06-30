@@ -37,17 +37,13 @@ public enum OptionType {
      */
     BETWEEN,
     /**
-     * AND 值2
-     */
-    BETWEEN_END,
-    /**
-     * BETWEEN 值1
+     * NOT_BETWEEN 值1
      */
     NOT_BETWEEN,
     /**
-     * AND 值2
+     * BETWEEN/NOT_BETWEEN 值1 AND 值2
      */
-    NOT_BETWEEN_END,
+    AND,
     /**
      * LIKE ‘%value%’
      */

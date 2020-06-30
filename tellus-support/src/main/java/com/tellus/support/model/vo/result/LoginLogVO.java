@@ -53,7 +53,7 @@ public class LoginLogVO implements Serializable {
     @ApiModelProperty(value = "来源地址", example = "www.baidu.com")
     private String referer;
 
-    @ApiModelProperty(value = "是否成功", example = "0-失败, 1-成功", allowableValues = "{0,1}")
+    @ApiModelProperty(value = "是否成功", example = "0-失败, 1-成功", allowableValues = "0,1")
     private Integer successful;
 
 }

@@ -27,7 +27,6 @@ public class ResourceFieldCondenser implements Serializable {
     private String value;
     private Integer enabled;
     private String remark;
-    private Integer sort;
     private String creator;
     private LocalDateTime createdAt;
     private String updater;

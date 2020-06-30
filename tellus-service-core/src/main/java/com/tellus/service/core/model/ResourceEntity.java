@@ -61,12 +61,6 @@ public class ResourceEntity implements Serializable {
     private String remark;
 
     /**
-     * 排序 排序
-     */
-    @TableField("SORT")
-    private Integer sort;
-
-    /**
      * 创建人 创建人
      */
     @TableField("CREATOR")

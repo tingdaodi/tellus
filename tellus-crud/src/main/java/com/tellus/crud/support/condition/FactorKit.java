@@ -295,12 +295,12 @@ public class FactorKit {
 
     private static boolean isBetween(OptionType optionType) {
         return optionType == OptionType.BETWEEN
-                || optionType == OptionType.BETWEEN_END;
+                || optionType == OptionType.AND;
     }
 
     private static boolean isNotBetween(OptionType optionType) {
         return optionType == OptionType.NOT_BETWEEN
-                || optionType == OptionType.NOT_BETWEEN_END;
+                || optionType == OptionType.AND;
     }
 
     @Data
