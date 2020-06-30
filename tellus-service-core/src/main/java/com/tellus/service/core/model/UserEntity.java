@@ -164,6 +164,6 @@ public class UserEntity implements Serializable {
      * 逻辑删除 0-未删除，1-已删除；默认：0
      */
     @TableField("DELETED")
-    private Integer deleted;
+    private Boolean deleted;
 
 }

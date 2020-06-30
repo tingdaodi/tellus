@@ -52,7 +52,7 @@ public class PlatformEntity implements Serializable {
      * 是否启用 0-未启用，1-已启用
      */
     @TableField("ENABLED")
-    private Integer enabled;
+    private Boolean enabled;
 
     /**
      * 创建人 创建人

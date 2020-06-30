@@ -1,17 +1,15 @@
 package com.tellus.service.core.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -52,7 +50,7 @@ public class SysPropertiesEntity implements Serializable {
      * 是否启用 0-未启用，1-已启用
      */
     @TableField("ENABLED")
-    private String enabled;
+    private Boolean enabled;
 
     /**
      * 备注 备注
@@ -75,8 +73,8 @@ public class SysPropertiesEntity implements Serializable {
     /**
      * 更新人 更新人
      */
-    @TableField("UPDATED_BY")
-    private String updatedBy;
+    @TableField("UPDATER")
+    private String updater;
 
     /**
      * 更新时间 更新时间

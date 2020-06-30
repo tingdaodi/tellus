@@ -1,17 +1,17 @@
 package com.tellus.service.core.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.tellus.support.enums.OperationTypeEnum;
+import com.tellus.support.enums.RequestMethodEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -52,7 +52,7 @@ public class OperationLogEntity implements Serializable {
      * 操作类型 1-查询，2-更新，3-新建，4-删除，5-逻辑删除
      */
     @TableField("OPERATE_TYPE")
-    private Integer operateType;
+    private OperationTypeEnum operateType;
 
     /**
      * 操作开始时间 操作开始时间
@@ -82,7 +82,7 @@ public class OperationLogEntity implements Serializable {
      * 是否成功 0-失败，1-成功
      */
     @TableField("SUCCESSFUL")
-    private Integer successful;
+    private Boolean successful;
 
     /**
      * 异常信息 异常信息
@@ -112,7 +112,7 @@ public class OperationLogEntity implements Serializable {
      * 请求方式 :GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS,TRACE
      */
     @TableField("REQUEST_METHOD")
-    private Integer requestMethod;
+    private RequestMethodEnum requestMethod;
 
     /**
      * 备注 备注

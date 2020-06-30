@@ -1,8 +1,11 @@
 package com.tellus.service.core.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +17,10 @@ import java.io.Serializable;
  * @author Roy.l
  * @since 2020-06-09
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_user_platform")
 public class UserPlatformEntity implements Serializable {
 
@@ -31,28 +38,4 @@ public class UserPlatformEntity implements Serializable {
     @TableField("PLATFORM_ID")
     private Integer platformId;
 
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getPlatformId() {
-        return platformId;
-    }
-
-    public void setPlatformId(Integer platformId) {
-        this.platformId = platformId;
-    }
-
-    @Override
-    public String toString() {
-        return "UserPlatformEntity{" +
-                "userId=" + userId +
-                ", platformId=" + platformId +
-                "}";
-    }
 }

@@ -22,7 +22,7 @@ public class FieldCohesive implements Serializable {
     private static final long serialVersionUID = 5813597847844493910L;
 
     private Integer id;
-    private String resourceId;
+    private Integer resourceId;
     private String method;
     private String label;
     private String name;

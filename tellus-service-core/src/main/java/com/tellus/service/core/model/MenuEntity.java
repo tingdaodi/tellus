@@ -52,7 +52,7 @@ public class MenuEntity implements Serializable {
      * 是否启用 0-未启用，1-已启用；默认：1
      */
     @TableField("ENABLED")
-    private Integer enabled;
+    private Boolean enabled;
 
     /**
      * 备注 备注

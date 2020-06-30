@@ -86,6 +86,6 @@ public class LoginLogEntity implements Serializable {
      * 是否成功 是否成功
      */
     @TableField("SUCCESSFUL")
-    private Integer successful;
+    private Boolean successful;
 
 }

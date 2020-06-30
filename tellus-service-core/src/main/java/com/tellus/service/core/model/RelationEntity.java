@@ -3,6 +3,7 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.tellus.support.enums.RelationTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +32,7 @@ public class RelationEntity implements Serializable {
      * 关系类型 1-用户，2-组织，3-角色，4-菜单
      */
     @TableId("TYPE")
-    private Integer type;
+    private RelationTypeEnum type;
 
     /**
      * 祖先，上级ID 祖先ID

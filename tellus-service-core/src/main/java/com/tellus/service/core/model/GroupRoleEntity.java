@@ -30,7 +30,6 @@ public class GroupRoleEntity implements Serializable {
     @TableField("ROLE_ID")
     private Integer roleId;
 
-
     public Integer getGroupId() {
         return groupId;
     }

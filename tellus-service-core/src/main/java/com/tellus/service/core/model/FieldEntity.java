@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tellus.support.enums.DisplayModeEnum;
+import com.tellus.support.enums.ParamMethodEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,13 +40,13 @@ public class FieldEntity implements Serializable {
      * 所属资源ID 所属资源ID
      */
     @TableField("RESOURCE_ID")
-    private String resourceId;
+    private Integer resourceId;
 
     /**
-     * 出/入参 1-入参，2-回参
+     * 参数方式: 1-入参，2-回参
      */
     @TableField("METHOD")
-    private String method;
+    private ParamMethodEnum method;
 
     /**
      * 参数标签 参数标签
@@ -69,7 +70,7 @@ public class FieldEntity implements Serializable {
      * 是否启用 0-未启用，1-启用
      */
     @TableField("ENABLED")
-    private String enabled;
+    private Boolean enabled;
 
     /**
      * 备注 备注

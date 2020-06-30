@@ -50,7 +50,7 @@ public class GroupEntity implements Serializable {
      * 是否启用 0-未启用，1-启用
      */
     @TableField("ENABLED")
-    private String enabled;
+    private Boolean enabled;
 
     /**
      * 备注 备注
