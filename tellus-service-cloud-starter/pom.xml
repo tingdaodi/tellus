@@ -8,9 +8,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tellus-web-cloud-starter</artifactId>
-    <name>Tellus Web Cloud Starter</name>
-    <description>Tellus Web Cloud Starter</description>
+    <artifactId>tellus-service-cloud-starter</artifactId>
+    <name>Tellus Service Cloud Starter</name>
+    <description>Tellus Service Cloud Starter</description>
 
     <dependencies>
         <dependency>
