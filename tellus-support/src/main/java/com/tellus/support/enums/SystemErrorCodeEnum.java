@@ -72,6 +72,15 @@ public enum SystemErrorCodeEnum implements IErrorCode {
     // ~ 角色管理 2600 ~ 2699
     // ==============================================================================
 
+
+    // ~ 移动节点 2700 ~ 2799
+    // ==============================================================================
+
+    RELATION_MOVE_TARGET_NODE_SAME(2700, "目标节点与当前节点相同"),
+    RELATION_SAVE_NODE_EXISTS(2701, "节点已存在"),
+    RELATION_NOT_MOVE_ROOT(2702, "根节点不能移动"),
+    RELATION_NOT_SUPPORTED_MOVE_NODE(2703, "不支持移动节点"),
+    RELATION_NOT_SUPPORTED_MOVE_TO_SUB(2704, "不支持移动至下级节点"),
     ;
 
     private final Integer code;

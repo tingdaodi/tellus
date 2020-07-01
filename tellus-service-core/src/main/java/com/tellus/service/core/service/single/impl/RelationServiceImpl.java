@@ -4,6 +4,7 @@ import com.tellus.crud.service.ICustomizeServiceImpl;
 import com.tellus.service.core.mapper.RelationMapper;
 import com.tellus.service.core.model.RelationEntity;
 import com.tellus.service.core.service.single.RelationService;
+import com.tellus.support.enums.RelationTypeEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,62 +21,62 @@ import java.util.List;
 public class RelationServiceImpl extends ICustomizeServiceImpl<RelationMapper, RelationEntity> implements RelationService {
 
     @Override
-    public Integer findCountDistance(int type, int ancestor, int distance) {
-        return baseMapper.selectCountDistance(type, ancestor, distance);
+    public Integer findCountDistance(RelationTypeEnum type, int ancestor, int distance) {
+        return baseMapper.selectCountDistance(type.getCode(), ancestor, distance);
     }
 
     @Override
-    public List<Integer> findSubs(int type, int ancestor) {
-        return baseMapper.selectSubs(type, ancestor);
+    public List<Integer> findSubs(RelationTypeEnum type, int ancestor) {
+        return baseMapper.selectSubs(type.getCode(), ancestor);
     }
 
     @Override
-    public List<Integer> findSubsByDistance(int type, int ancestor, int distance) {
-        return baseMapper.selectSubsByDistance(type, ancestor, distance);
+    public List<Integer> findSubsByDistance(RelationTypeEnum type, int ancestor, int distance) {
+        return baseMapper.selectSubsByDistance(type.getCode(), ancestor, distance);
     }
 
     @Override
-    public List<Integer> findPathSubsByDistance(int type, int ancestor, int distance) {
-        return baseMapper.selectPathSubsByDistance(type, ancestor, distance);
+    public List<Integer> findPathSubsByDistance(RelationTypeEnum type, int ancestor, int distance) {
+        return baseMapper.selectPathSubsByDistance(type.getCode(), ancestor, distance);
     }
 
     @Override
-    public List<Integer> findPathToAncestor(int type, int ancestor, int descendant) {
-        return baseMapper.selectPathToAncestor(type, ancestor, descendant);
+    public List<Integer> findPathToAncestor(RelationTypeEnum type, int ancestor, int descendant) {
+        return baseMapper.selectPathToAncestor(type.getCode(), ancestor, descendant);
     }
 
     @Override
-    public List<Integer> findPathParent(int type, int descendant, int distance) {
-        return baseMapper.selectPathParent(type, descendant, distance);
+    public Integer findParentByDistance(RelationTypeEnum type, int descendant, int distance) {
+        return baseMapper.selectParent(type.getCode(), descendant, distance);
     }
 
     @Override
-    public List<Integer> findPathParents(int type, int descendant, int distance) {
-        return baseMapper.selectPathParents(type, descendant, distance);
+    public List<Integer> findPathParents(RelationTypeEnum type, int descendant, int distance) {
+        return baseMapper.selectPathParents(type.getCode(), descendant, distance);
     }
 
     @Override
-    public Integer findDistance(int type, int ancestor, int descendant) {
-        return baseMapper.selectDistance(type, ancestor, descendant);
+    public Integer findDistance(RelationTypeEnum type, int ancestor, int descendant) {
+        return baseMapper.selectDistance(type.getCode(), ancestor, descendant);
     }
 
     @Override
-    public void savePath(int type, int ancestor, int descendant) {
-        baseMapper.insertPath(type, ancestor, descendant);
+    public void savePath(RelationTypeEnum type, int ancestor, int descendant) {
+        baseMapper.insertPath(type.getCode(), ancestor, descendant);
     }
 
     @Override
-    public void saveNode(int type, int nodeId) {
-        baseMapper.insertNode(type, nodeId);
+    public void saveNode(RelationTypeEnum type, int nodeId) {
+        baseMapper.insertNode(type.getCode(), nodeId);
     }
 
     @Override
-    public void removePath(int type, int nodeId) {
-        baseMapper.deletePath(type, nodeId);
+    public void removePath(RelationTypeEnum type, int nodeId) {
+        baseMapper.deletePath(type.getCode(), nodeId);
     }
 
     @Override
-    public Integer findLowestDistances(int type, int ancestor) {
-        return baseMapper.selectLowestDistances(type, ancestor);
+    public Integer findLowestDistances(RelationTypeEnum type, int ancestor) {
+        return baseMapper.selectLowestDistances(type.getCode(), ancestor);
     }
 }

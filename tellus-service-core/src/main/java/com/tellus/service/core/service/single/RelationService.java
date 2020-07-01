@@ -2,6 +2,7 @@ package com.tellus.service.core.service.single;
 
 import com.tellus.crud.service.ICustomizeService;
 import com.tellus.service.core.model.RelationEntity;
+import com.tellus.support.enums.RelationTypeEnum;
 
 import java.util.List;
 
@@ -16,6 +17,15 @@ import java.util.List;
 public interface RelationService extends ICustomizeService<RelationEntity> {
 
     /**
+     * 根节点
+     */
+    Integer ROOT = 0;
+    /**
+     * 直属层级
+     */
+    Integer DIRECT_DISTANCE = 1;
+
+    /**
      * 查询 #{ancestor} 下第 #{distance} 层节点总数
      *
      * @param type     关系类型
@@ -23,7 +33,18 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param distance 层级
      * @return Integer
      */
-    Integer findCountDistance(int type, int ancestor, int distance);
+    Integer findCountDistance(RelationTypeEnum type, int ancestor, int distance);
+
+    /**
+     * 查询 #{ancestor} 的直属下级
+     *
+     * @param type     关系类型
+     * @param ancestor 上级 Id
+     * @return List<Integer>
+     */
+    default List<Integer> findDirectSubs(RelationTypeEnum type, int ancestor) {
+        return findSubsByDistance(type, ancestor, DIRECT_DISTANCE);
+    }
 
     /**
      * 查询 #{ancestor} 的所有子节点
@@ -32,7 +53,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param ancestor 上级 Id
      * @return List<Integer>
      */
-    List<Integer> findSubs(int type, int ancestor);
+    List<Integer> findSubs(RelationTypeEnum type, int ancestor);
 
     /**
      * 查询上级节点 #{ancestor} 的第 #{distance} 层的所有节点
@@ -42,7 +63,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param distance 层级
      * @return List<Integer>
      */
-    List<Integer> findSubsByDistance(int type, int ancestor, int distance);
+    List<Integer> findSubsByDistance(RelationTypeEnum type, int ancestor, int distance);
 
     /**
      * 查询上级节点 #{ancestor} 的往下到第 #{distance} 层之间所有的节点
@@ -52,17 +73,18 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param distance 层级
      * @return List<Integer>
      */
-    List<Integer> findPathSubsByDistance(int type, int ancestor, int distance);
+    List<Integer> findPathSubsByDistance(RelationTypeEnum type, int ancestor, int distance);
 
     /**
-     * 查询 #{ancestor} 与 #{descendant} 之间所有的节点
+     * 查询 #{descendant} 的直属父节点
      *
      * @param type       关系类型
-     * @param ancestor   上级 Id
      * @param descendant 下级 Id
-     * @return List<Integer>
+     * @return Integer
      */
-    List<Integer> findPathToAncestor(int type, int ancestor, int descendant);
+    default Integer findDirectParent(RelationTypeEnum type, int descendant) {
+        return findParentByDistance(type, descendant, DIRECT_DISTANCE);
+    }
 
     /**
      * 查询 #{descendant} 第 #{distance} 的父节点
@@ -72,7 +94,17 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param distance   层级
      * @return List<Integer>
      */
-    List<Integer> findPathParent(int type, int descendant, int distance);
+    Integer findParentByDistance(RelationTypeEnum type, int descendant, int distance);
+
+    /**
+     * 查询 #{ancestor} 与 #{descendant} 之间所有的节点
+     *
+     * @param type       关系类型
+     * @param ancestor   上级 Id
+     * @param descendant 下级 Id
+     * @return List<Integer>
+     */
+    List<Integer> findPathToAncestor(RelationTypeEnum type, int ancestor, int descendant);
 
     /**
      * 查询 #{descendant} 节点 到第 #{distance} 层父节点之间的所有节点
@@ -82,7 +114,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param distance   层级
      * @return List<Integer>
      */
-    List<Integer> findPathParents(int type, int descendant, int distance);
+    List<Integer> findPathParents(RelationTypeEnum type, int descendant, int distance);
 
     /**
      * 查询 #{ancestor} 与 #{descendant} 之间的距离
@@ -92,7 +124,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param descendant 下级 Id
      * @return Integer
      */
-    Integer findDistance(int type, int ancestor, int descendant);
+    Integer findDistance(RelationTypeEnum type, int ancestor, int descendant);
 
     /**
      * 将 #{descendant} 插入到 #{ancestor}
@@ -101,7 +133,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param ancestor   上级 Id
      * @param descendant 下级 Id
      */
-    void savePath(int type, int ancestor, int descendant);
+    void savePath(RelationTypeEnum type, int ancestor, int descendant);
 
     /**
      * 插入节点自身
@@ -109,7 +141,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param type   关系类型
      * @param nodeId 节点Id
      */
-    void saveNode(int type, int nodeId);
+    void saveNode(RelationTypeEnum type, int nodeId);
 
     /**
      * 从树中删除节点的路径
@@ -119,7 +151,7 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param type   关系类型
      * @param nodeId 节点Id
      */
-    void removePath(int type, int nodeId);
+    void removePath(RelationTypeEnum type, int nodeId);
 
     /**
      * 查询 #{ancestor} 子树的最大深度
@@ -128,6 +160,6 @@ public interface RelationService extends ICustomizeService<RelationEntity> {
      * @param ancestor 上级 Id
      * @return Integer
      */
-    Integer findLowestDistances(int type, int ancestor);
+    Integer findLowestDistances(RelationTypeEnum type, int ancestor);
 
 }

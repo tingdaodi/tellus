@@ -63,6 +63,17 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
     List<Integer> selectPathSubsByDistance(@Param("type") int type, @Param("ancestor") int ancestor, @Param("distance") int distance);
 
     /**
+     * 查询 #{descendant} 第 #{distance} 的父节点
+     *
+     * @param type       关系类型
+     * @param descendant 下级 Id
+     * @param distance   层级
+     * @return List<Integer>
+     */
+    @Select("select ancestor from t_relation where type=#{type} and descendant=#{descendant} and distance=#{distance}")
+    Integer selectParent(@Param("type") int type, @Param("descendant") int descendant, @Param("distance") int distance);
+
+    /**
      * 查询 #{ancestor} 与 #{descendant} 之间所有的节点
      *
      * @param type       关系类型
@@ -76,17 +87,6 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
             "order by distance desc"
     })
     List<Integer> selectPathToAncestor(@Param("type") int type, @Param("ancestor") int ancestor, @Param("descendant") int descendant);
-
-    /**
-     * 查询 #{descendant} 第 #{distance} 的父节点
-     *
-     * @param type       关系类型
-     * @param descendant 下级 Id
-     * @param distance   层级
-     * @return List<Integer>
-     */
-    @Select("select ancestor from t_relation where type=#{type} and descendant=#{descendant} and distance=#{distance}")
-    List<Integer> selectPathParent(@Param("type") int type, @Param("descendant") int descendant, @Param("distance") int distance);
 
     /**
      * 查询 #{descendant} 节点 到第 #{distance} 层父节点之间的所有节点
