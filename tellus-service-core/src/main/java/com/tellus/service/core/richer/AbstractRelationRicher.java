@@ -202,18 +202,11 @@ public abstract class AbstractRelationRicher implements IRelationRicher {
     // ~ Setting Methods
     // ==============================================================================
 
-    public Integer getDescendant() {
-        return descendant;
-    }
-
     @Override
     public void setDescendant(Integer descendant) {
         this.descendant = descendant;
     }
 
-    public RelationTypeEnum getRelationType() {
-        return relationType;
-    }
 
     @Override
     public void setRelationType(RelationTypeEnum relationType) {
@@ -236,10 +229,6 @@ public abstract class AbstractRelationRicher implements IRelationRicher {
 
     public void setMoveToSubSupported(Boolean moveToSubSupported) {
         this.moveToSubSupported = moveToSubSupported;
-    }
-
-    public RelationService getRelationService() {
-        return relationService;
     }
 
     @Override
