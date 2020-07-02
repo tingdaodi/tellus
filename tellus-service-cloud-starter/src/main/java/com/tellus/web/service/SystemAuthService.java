@@ -13,9 +13,9 @@ public interface SystemAuthService {
     /**
      * 登录成功后, 写入登录日志,
      *
-     * @param vo
-     * @return
+     * @param createLoginLogVO VO
+     * @return Boolean
      */
-    boolean loginSuccessAfter(CreateLoginLogVO vo);
+    void loginSuccessAfter(CreateLoginLogVO createLoginLogVO);
 
 }

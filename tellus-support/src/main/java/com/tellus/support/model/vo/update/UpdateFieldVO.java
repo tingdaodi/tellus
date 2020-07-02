@@ -1,9 +1,6 @@
 package com.tellus.support.model.vo.update;
 
-import com.tellus.support.annotation.IQueries;
 import com.tellus.support.enums.ParamMethodEnum;
-import com.tellus.support.enums.basic.FactorType;
-import com.tellus.support.enums.basic.OptionType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
