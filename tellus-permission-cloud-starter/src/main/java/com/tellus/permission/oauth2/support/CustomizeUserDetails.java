@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
@@ -21,6 +22,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 自定义: 用户认证实体
@@ -93,6 +95,19 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
         return Objects.equals(this.details.getStatus(), UserStatusEnum.NORMAL);
     }
 
+    @Override
+    public boolean equals(Object rhs) {
+        if (rhs instanceof CustomizeUserDetails) {
+            return this.details.username.equals(((CustomizeUserDetails) rhs).details.username);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.details.username.hashCode();
+    }
+
     // ~ Users Builder
     // ========================================================================================================
 
@@ -122,6 +137,14 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
             return this;
         }
 
+        public UserBuilder authorities(GrantedAuthority... authorities) {
+            return authorities(Arrays.asList(authorities));
+        }
+
+        public UserBuilder authorities(String... authorities) {
+            return authorities(AuthorityUtils.createAuthorityList(authorities));
+        }
+
         public UserBuilder fields(Collection<Field> fields) {
             this.fields = new HashSet<>(fields);
             return this;
@@ -129,7 +152,17 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
 
         public UserBuilder roles(Collection<Role> roles) {
             this.roles = new HashSet<>(roles);
-            return this;
+
+            List<GrantedAuthority> authorities = roles
+                    .stream()
+                    .map(role -> {
+                        String value = role.role;
+                        Assert.isTrue(!value.startsWith("ROLE_"), () -> value
+                                + " cannot start with ROLE_ (it is automatically added)");
+                        return new SimpleGrantedAuthority("ROLE_" + value);
+                    }).collect(Collectors.toList());
+
+            return authorities(authorities);
         }
 
         public UserBuilder resources(Collection<Resource> resources) {
@@ -158,6 +191,33 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
             Assert.notNull(encoder, "encoder cannot be null");
             this.passwordEncoder = encoder;
             return this;
+        }
+
+        public UserBuilder accountExpired(boolean accountExpired) {
+            this.accountExpired = accountExpired;
+            return this;
+        }
+
+        public UserBuilder accountLocked(boolean accountLocked) {
+            this.accountLocked = accountLocked;
+            return this;
+        }
+
+        public UserBuilder credentialsExpired(boolean credentialsExpired) {
+            this.credentialsExpired = credentialsExpired;
+            return this;
+        }
+
+        public UserBuilder disabled(boolean disabled) {
+            this.disabled = disabled;
+            return this;
+        }
+
+        public UserDetails builder() {
+            String encodedPassword = this.passwordEncoder.apply(this.details.password);
+            return new CustomizeUserDetails(authorities, fields, roles, resources,
+                    groups, platforms, details, !accountExpired, !accountLocked,
+                    !credentialsExpired, !disabled);
         }
     }
 
