@@ -55,6 +55,6 @@ public class CreateLoginLogVO implements Serializable {
     private String referer;
 
     @ApiModelProperty(value = "是否成功", example = "0-失败, 1-成功", allowableValues = "0,1")
-    private Integer successful;
+    private Boolean successful;
 
 }

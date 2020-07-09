@@ -47,7 +47,7 @@
         <redission.starter.version>3.12.5</redission.starter.version>
         <swagger.starter.version>1.9.1.RELEASE</swagger.starter.version>
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
-        <spring-security-oauth2.version>2.4.1.RELEASE</spring-security-oauth2.version>
+        <spring-security-oauth2.version>2.3.5.RELEASE</spring-security-oauth2.version>
     </properties>
 
     <dependencyManagement>
