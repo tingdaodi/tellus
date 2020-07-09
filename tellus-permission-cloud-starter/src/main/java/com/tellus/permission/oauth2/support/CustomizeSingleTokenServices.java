@@ -60,6 +60,7 @@ public class CustomizeSingleTokenServices implements AuthorizationServerTokenSer
             tokenStore.removeAccessToken(existingAccessToken);
         }
 
+        //  重新生成刷新令牌, 访问令牌
         OAuth2RefreshToken refreshToken = createRefreshToken(authentication);
         OAuth2AccessToken accessToken = createAccessToken(authentication, refreshToken);
         tokenStore.storeAccessToken(accessToken, authentication);

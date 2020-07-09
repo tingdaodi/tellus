@@ -1,6 +1,7 @@
 package com.tellus.permission.oauth2.service;
 
 import com.tellus.permission.oauth2.TellusSecurityProperties;
+import com.tellus.permission.oauth2.support.CustomizeClientDetails;
 import com.tellus.permission.oauth2.support.CustomizeUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -24,7 +25,7 @@ public class IClientDetailsServiceImpl implements ClientDetailsService {
 
     @Override
     public ClientDetails loadClientByClientId(String s) throws ClientRegistrationException {
-        return new CustomizeUserDetails(tellusSecurityProperties);
+        return new CustomizeClientDetails(tellusSecurityProperties);
     }
 
 }

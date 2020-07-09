@@ -1,5 +1,6 @@
 package com.tellus.permission.oauth2.support;
 
+import com.tellus.permission.oauth2.TellusSecurityProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -45,6 +46,24 @@ public class CustomizeClientDetails implements ClientDetails, Serializable {
         setRegisteredRedirectUri(prototype.getRegisteredRedirectUri());
         setScope(prototype.getScope());
         setResourceIds(prototype.getResourceIds());
+    }
+
+    public CustomizeClientDetails(TellusSecurityProperties properties) {
+        this();
+        setAccessTokenValiditySeconds((int) properties.getAccessTokenValidity().getSeconds());
+        setRefreshTokenValiditySeconds((int) properties.getRefreshTokenValidity().getSeconds());
+        setAuthoritiesAsStrings(properties.getAuthorities());
+        setAuthorizedGrantTypes(properties.getAuthorizedGrantTypes());
+        setClientId(properties.getClientId());
+        setClientSecret(properties.getClientSecret());
+        setScope(properties.getScopes());
+        setResourceIds(properties.getResourceIds());
+        if (null != properties.getAdditionalInformation()) {
+            setAdditionalInformation(properties.getAdditionalInformation());
+        }
+        if (null != properties.getAutoApproveScopes()) {
+            setAutoApproveScopes(properties.getAutoApproveScopes());
+        }
     }
 
     public CustomizeClientDetails(String clientId, String resourceIds,

@@ -8,6 +8,7 @@ import com.tellus.support.model.vo.result.ResourceVO;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * 授权业务接口类
@@ -25,6 +26,14 @@ public interface AuthorizationService {
      * @return CustomizeUserDetails
      */
     CustomizeUserDetails loadUserByUsername(String username, Set<String> platforms);
+
+    /**
+     * 查询用户信息
+     *
+     * @param username 用户名
+     * @return CustomizeUserDetails
+     */
+    CustomizeUserDetails loadUserByUsername(String username);
 
     /**
      * 查询所有的资源

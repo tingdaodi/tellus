@@ -1,5 +1,6 @@
 package com.tellus.support.model.vo.result;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.tellus.support.annotation.IExpose;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,5 +54,21 @@ public class ResourceVO implements Serializable {
 
     @ApiModelProperty(value = "更新时间", example = "2020-07-01 00:00:00")
     private LocalDateTime updatedAt;
+
+    @ApiModelProperty(hidden = true)
+    private String permission;
+
+    public ResourceVO toPermission() {
+        this.setPermission(parse());
+        return this;
+    }
+
+    public String parse() {
+        String slash = "/", space = " ", colon = ":", doubleColon = "::";
+        if (value.contains(slash)) {
+            return value.replaceAll(slash, colon).replaceAll(space, doubleColon);
+        }
+        return value;
+    }
 
 }
