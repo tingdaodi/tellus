@@ -19,7 +19,7 @@ public class CustomizeOauthExceptionSerializer extends StdSerializer<CustomizeOa
 
     private static final long serialVersionUID = -2605537915364103539L;
 
-    protected CustomizeOauthExceptionSerializer() {
+    public CustomizeOauthExceptionSerializer() {
         super(CustomizeOauthException.class);
     }
 
