@@ -3,10 +3,7 @@ package com.tellus.support.model.vo;
 import com.tellus.support.enums.ParamMethodEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,12 +17,14 @@ import java.util.Objects;
  * @author Roy
  * @date 2020/7/9 22:12
  */
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "初始化字段VO")
-public class InitFieldResourceVO implements Serializable {
+public class InitFieldVO implements Serializable {
     private static final long serialVersionUID = -461651030977530230L;
 
     @NotEmpty(message = "所属资源的值不能为空")
@@ -66,11 +65,11 @@ public class InitFieldResourceVO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof InitFieldResourceVO)) {
+        if (!(o instanceof InitFieldVO)) {
             return false;
         }
 
-        InitFieldResourceVO that = (InitFieldResourceVO) o;
+        InitFieldVO that = (InitFieldVO) o;
         return Objects.equals(resourceValue, that.resourceValue)
                 && method == that.method
                 && Objects.equals(name, that.name)
