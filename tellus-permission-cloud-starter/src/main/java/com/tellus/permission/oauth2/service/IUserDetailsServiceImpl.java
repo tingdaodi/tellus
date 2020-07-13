@@ -1,6 +1,5 @@
 package com.tellus.permission.oauth2.service;
 
-import com.tellus.permission.oauth2.TellusSecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +16,10 @@ import org.springframework.stereotype.Service;
 @Service(BeanIds.USER_DETAILS_SERVICE)
 public class IUserDetailsServiceImpl implements UserDetailsService {
 
-    private final TellusSecurityProperties tellusSecurityProperties;
     private final AuthorizationService authorizationService;
 
     @Autowired
-    public IUserDetailsServiceImpl(TellusSecurityProperties tellusSecurityProperties,
-                                   AuthorizationService authorizationService) {
-        this.tellusSecurityProperties = tellusSecurityProperties;
+    public IUserDetailsServiceImpl(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
     }
 

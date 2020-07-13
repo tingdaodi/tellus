@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
  * @author Roy
  * @date 2020/7/1 0:16
  */
+@IQueries
 @Data
 @Builder
 @NoArgsConstructor

@@ -1,5 +1,6 @@
 package com.tellus.support.model.vo.retrieve;
 
+import com.tellus.support.annotation.IQueries;
 import com.tellus.support.enums.RelationTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @author Roy
  * @date 2020/6/30 23:46
  */
+@IQueries
 @Data
 @Builder
 @NoArgsConstructor
