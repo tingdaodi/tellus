@@ -28,6 +28,8 @@ public @interface IOperationLog {
     String theme() default "";
 
     /**
+     * TODO 自动注入操作人, 待实现, 兼容
+     *
      * @return 操作人
      */
     String operator() default "System";

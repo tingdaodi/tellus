@@ -1,6 +1,8 @@
 package com.tellus.permission.cloud.controller;
 
 import com.tellus.config.dozer.DozerGenerator;
+import com.tellus.permission.oauth2.support.UserDetailsUtils;
+import com.tellus.support.enums.UserTypeEnum;
 
 import javax.annotation.Resource;
 
@@ -21,5 +23,12 @@ public abstract class BaseController {
     // ~ Methods
     // ==============================================================================
 
+    public Boolean isSupperAdmin() {
+        return UserDetailsUtils.isSupperAdmin();
+    }
+
+    public Boolean isInsider() {
+        return UserDetailsUtils.obtainUserType() == UserTypeEnum.INSIDER;
+    }
 
 }

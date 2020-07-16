@@ -1,7 +1,10 @@
 package com.tellus.permission.cloud.controller;
 
 import com.tellus.permission.oauth2.service.AuthorizationService;
+import com.tellus.permission.oauth2.support.UserDetailsUtils;
 import com.tellus.support.enums.RelationTypeEnum;
+import com.tellus.support.enums.SystemErrorCodeEnum;
+import com.tellus.support.exception.AccessDeniedException;
 import com.tellus.support.interfaces.IAncestor;
 import com.tellus.support.interfaces.IDescendant;
 
@@ -21,7 +24,7 @@ public abstract class BaseRelationController extends BaseController {
     @Resource
     private AuthorizationService authorizationService;
 
-    // ~ Protected Methods
+    // ~ Protected/Override Methods
     // ==============================================================================
 
     /**
@@ -36,7 +39,7 @@ public abstract class BaseRelationController extends BaseController {
             IAncestor ancestor = (IAncestor) vo;
             if (null != ancestor.getAncestor()) {
                 RelationTypeEnum relationType = getRelationType();
-                authorizationService.isSubordinate(relationType, ancestor.getAncestor());
+                checkWhetherSubordinate(ancestor.getAncestor());
             }
         }
 
@@ -44,14 +47,24 @@ public abstract class BaseRelationController extends BaseController {
         if (vo instanceof IDescendant) {
             IDescendant descendant = (IDescendant) vo;
             if (null != descendant.getId()) {
-
+                checkWhetherSubordinate(descendant.getId());
             }
         }
 
     }
 
-    protected void checkWhetherSubordinate(RelationTypeEnum relationType, Integer nodeId) {
+    protected void checkWhetherSubordinate(Integer nodeId) {
+        if (UserDetailsUtils.isSupperAdmin()) {
+            return;
+        }
 
+        String username = UserDetailsUtils.obtainUsername();
+        if (authorizationService.isSubordinate(getRelationType(), nodeId)) {
+            return;
+        }
+
+        throw new AccessDeniedException(SystemErrorCodeEnum.FORBIDDEN,
+                "User [" + username + "] does not have permission to access resources [" + nodeId + "]");
     }
 
     /**

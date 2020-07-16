@@ -35,7 +35,6 @@ public class UserDetailsUtils {
      */
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
-
     // ~ Static Basic Methods
     // ==============================================================================
 
