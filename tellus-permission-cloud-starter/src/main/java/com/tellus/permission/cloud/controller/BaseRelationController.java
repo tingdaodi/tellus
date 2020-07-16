@@ -50,7 +50,6 @@ public abstract class BaseRelationController extends BaseController {
                 checkWhetherSubordinate(descendant.getId());
             }
         }
-
     }
 
     protected void checkWhetherSubordinate(Integer nodeId) {
