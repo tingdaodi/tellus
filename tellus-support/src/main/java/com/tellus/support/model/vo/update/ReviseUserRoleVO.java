@@ -25,9 +25,9 @@ import java.util.Set;
 public class ReviseUserRoleVO implements Serializable {
     private static final long serialVersionUID = -8384618163849121225L;
 
-    @NotNull(message = "用户名不能为空")
-    @ApiModelProperty(value = "用户名", required = true, example = "user001")
-    private String username;
+    @NotNull(message = "用户ID不能为空")
+    @ApiModelProperty(value = "用户ID", required = true, example = "1000")
+    private Integer userId;
 
     @NotNull(message = "角色ID不能为空")
     @ApiModelProperty(value = "角色ID", required = true, example = "[1,2,3,4]")

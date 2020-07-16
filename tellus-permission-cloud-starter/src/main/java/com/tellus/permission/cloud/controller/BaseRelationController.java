@@ -53,18 +53,23 @@ public abstract class BaseRelationController extends BaseController {
     }
 
     protected void checkWhetherSubordinate(Integer nodeId) {
+        checkWhetherSubordinate(getRelationType(), nodeId);
+    }
+
+    protected void checkWhetherSubordinate(RelationTypeEnum relationType, Integer nodeId) {
         if (UserDetailsUtils.isSupperAdmin()) {
             return;
         }
 
-        String username = UserDetailsUtils.obtainUsername();
-        if (authorizationService.isSubordinate(getRelationType(), nodeId)) {
+        if (authorizationService.isSubordinate(relationType, nodeId)) {
             return;
         }
 
+        String username = UserDetailsUtils.obtainUsername();
         throw new AccessDeniedException(SystemErrorCodeEnum.FORBIDDEN,
                 "User [" + username + "] does not have permission to access resources [" + nodeId + "]");
     }
+
 
     /**
      * 获取关系类型
