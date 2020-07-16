@@ -1,9 +1,11 @@
 package com.tellus.permission.cloud.controller.v1;
 
-import com.tellus.permission.cloud.controller.AbstractRetrieveController;
-import com.tellus.permission.cloud.service.ILoginLogService;
-import com.tellus.support.model.vo.result.LoginLogVO;
-import com.tellus.support.model.vo.retrieve.RetrieveLoginLogVO;
+import com.tellus.permission.cloud.controller.AbstractCrudController;
+import com.tellus.permission.cloud.service.IResourceService;
+import com.tellus.support.model.vo.create.CreateResourceVO;
+import com.tellus.support.model.vo.result.ResourceVO;
+import com.tellus.support.model.vo.retrieve.RetrieveResourceVO;
+import com.tellus.support.model.vo.update.UpdateResourceVO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,31 +14,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 登录日志管理
+ * 资源管理
  *
  * @author Roy
- * @date 2020/7/16 18:21
+ * @date 2020/7/16 20:43
  */
 @Slf4j
 @Validated
 @RestController
-@RequestMapping(value = "/login/logs")
-@Api(tags = "登录日志管理")
-public class LoginLogController extends AbstractRetrieveController<LoginLogVO, RetrieveLoginLogVO> {
+@RequestMapping(value = "/resources")
+@Api(tags = "资源管理")
+public class ResourceController extends AbstractCrudController<ResourceVO,
+        CreateResourceVO, RetrieveResourceVO, UpdateResourceVO> {
 
     // ~ Static fields/initializers
     // ==============================================================================
 
-    private final ILoginLogService loginLogService;
+    private final IResourceService resourceService;
 
     // ~ Constructors
     // ==============================================================================
 
     @Autowired
-    public LoginLogController(ILoginLogService loginLogService) {
-        super(loginLogService);
-        this.loginLogService = loginLogService;
+    public ResourceController(IResourceService resourceService) {
+        super(resourceService);
+        this.resourceService = resourceService;
     }
+
+    // ~ Main Methods
+    // ==============================================================================
+
 
     // ~ Protected Methods
     // ==============================================================================
@@ -48,5 +55,4 @@ public class LoginLogController extends AbstractRetrieveController<LoginLogVO, R
 
     // ~ Private Methods
     // ==============================================================================
-
 }

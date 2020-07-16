@@ -5,6 +5,10 @@ import com.tellus.permission.oauth2.support.UserDetailsUtils;
 import com.tellus.support.enums.UserTypeEnum;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.Objects;
+
+import static com.tellus.support.constants.SystemConstants.ROLE_SUPPER_ADMIN;
 
 /**
  * 通用 controller , 提供底层通用方式实现
@@ -25,6 +29,13 @@ public abstract class BaseController {
 
     public Boolean isSupperAdmin() {
         return UserDetailsUtils.isSupperAdmin();
+    }
+
+    public Boolean isSupperAdmin(Serializable roleId) {
+        return UserDetailsUtils.obtainUserDetails().getRoles()
+                .stream()
+                .filter(role -> Objects.equals(roleId, role.getId()))
+                .anyMatch(role -> Objects.equals(ROLE_SUPPER_ADMIN, role.getRole()));
     }
 
     public Boolean isInsider() {
