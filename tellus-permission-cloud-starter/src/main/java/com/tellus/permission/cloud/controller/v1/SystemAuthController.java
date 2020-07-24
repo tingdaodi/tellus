@@ -20,9 +20,8 @@ import com.tellus.support.model.vo.result.UserVO;
 import com.tellus.toolkit.RelationKit;
 import com.tellus.toolkit.tree.Node;
 import com.tellus.toolkit.tree.NodeBuilder;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -136,6 +135,14 @@ public class SystemAuthController extends BaseController {
         return Result.success();
     }
 
+    // ~ 此方法为显示登陆 swagger 文档
+
+    @SuppressWarnings("unused")
+    @PostMapping(value = "/demo -> ", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("登入, 【实际路由: /oauth/token】")
+    public TokenVO signIn(SignInVO signInVO) {
+        return new TokenVO();
+    }
 
     // ~ Protected Methods
     // ==============================================================================
@@ -186,6 +193,62 @@ public class SystemAuthController extends BaseController {
             } catch (Exception e) {
                 throw new NotMatchException(e);
             }
+        }
+    }
+
+    @SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
+    @Data
+    @ApiModel(description = "登入VO")
+    private static class SignInVO {
+
+        @ApiModelProperty(value = "用户名", example = "user001")
+        private String username;
+
+        @ApiModelProperty(value = "密码", example = "123456")
+        private String password;
+
+        @ApiModelProperty(value = "授予类型", example = "bearer")
+        private String grant_type;
+
+        @ApiModelProperty(value = "作用域", example = "all")
+        private String scope;
+
+        @ApiModelProperty(value = "client_id", example = "tellus-cloud")
+        private String client_id;
+
+        @ApiModelProperty(value = "client_secret", example = "123456")
+        private String client_secret;
+    }
+
+    @Data
+    @ApiModel(description = "Token")
+    private static class TokenVO {
+        @ApiModelProperty(value = "Token", example = "2dfwse-d12d12-dfsdf2-df123d-232cdfsdfsdfsd")
+        private String value;
+
+        @ApiModelProperty(value = "过期时间", example = "2020-07-24")
+        private String expiration;
+
+        @ApiModelProperty(value = "加密类型", example = "bearer")
+        private String tokenType;
+
+        @ApiModelProperty(value = "刷新Token", example = "2dfwse-d12d12-dfsdf2-df123d-232cdfsdfsdfsd")
+        private String refreshToken;
+
+        @ApiModelProperty(value = "作用域", example = "all")
+        private String scope;
+
+        @ApiModelProperty(value = "附加信息", example = "[]")
+        private String[] additionalInformation;
+
+        @Data
+        @ApiModel(description = "刷新TOKEN")
+        private static class RefreshToken {
+            @ApiModelProperty(value = "Token", example = "2dfwse-d12d12-dfsdf2-df123d-232cdfsdfsdfsd")
+            private String value;
+
+            @ApiModelProperty(value = "过期时间", example = "2020-07-24")
+            private String expiration;
         }
     }
 }
