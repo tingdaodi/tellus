@@ -1,5 +1,6 @@
 package com.tellus.support.model.vo.create;
 
+import com.tellus.support.enums.SignTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,10 @@ import java.time.LocalDateTime;
 @ApiModel(description = "创建登录日志VO")
 public class CreateLoginLogVO implements Serializable {
     private static final long serialVersionUID = 6350369709775242156L;
+
+    @NotEmpty(message = "登录类型不能为空")
+    @ApiModelProperty(value = "登录类型", example = "1-登入, 2-登出", allowableValues = "1,2")
+    private SignTypeEnum signType;
 
     @NotEmpty(message = "用户名不能为空")
     @ApiModelProperty(value = "用户名", example = "user001")

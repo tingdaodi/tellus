@@ -1,11 +1,17 @@
 package com.tellus.permission.cloud.service;
 
+import com.tellus.support.enums.SignTypeEnum;
 import com.tellus.support.model.cohesive.UserDetailsCondenser;
-import com.tellus.support.model.vo.create.CreateLoginLogVO;
+import com.tellus.support.model.vo.result.MenuVO;
+import com.tellus.support.model.vo.result.UserVO;
 import com.tellus.support.model.vo.update.RevisePasswordVO;
 import com.tellus.support.model.vo.update.ReviseUserGroupVO;
 import com.tellus.support.model.vo.update.ReviseUserPlatformVO;
 import com.tellus.support.model.vo.update.ReviseUserRoleVO;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 授权/认证通用接口
@@ -16,12 +22,12 @@ import com.tellus.support.model.vo.update.ReviseUserRoleVO;
 public interface ISystemAuthService {
 
     /**
-     * 登录成功后, 保存登录日志
+     * 登入/登出成功后, 保存登录日志
      *
-     * @param loginLogVO VO
+     * @param signType 登录类型
      * @return Boolean
      */
-    Boolean loginSuccessAfter(CreateLoginLogVO loginLogVO);
+    Boolean signSuccessAfter(SignTypeEnum signType);
 
     /**
      * 更新/重置密码
@@ -30,6 +36,14 @@ public interface ISystemAuthService {
      * @return Boolean
      */
     Boolean revisePassword(RevisePasswordVO revisePasswordVO);
+
+    /**
+     * 查询用户信息
+     *
+     * @param username 用户名
+     * @return Optional<UserVO>
+     */
+    Optional<UserVO> findUserByUsername(String username);
 
     /**
      * 认证使用, 查询用户信息 (组织, 角色, 平台, 密码等)
@@ -62,5 +76,13 @@ public interface ISystemAuthService {
      * @return Boolean
      */
     Boolean reviseGroup(ReviseUserGroupVO reviseUserGroupVO);
+
+    /**
+     * 获取菜单信息
+     *
+     * @param roleIds 角色
+     * @return List<MenuVO>
+     */
+    List<MenuVO> getMenus(Collection<Integer> roleIds);
 
 }

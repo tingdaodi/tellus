@@ -3,6 +3,7 @@ package com.tellus.permission.oauth2.support;
 import com.google.common.collect.Lists;
 import com.tellus.permission.oauth2.service.AuthorizationService;
 import com.tellus.support.RequestInfo;
+import com.tellus.support.enums.SignTypeEnum;
 import com.tellus.support.model.vo.create.CreateLoginLogVO;
 import com.tellus.toolkit.util.SpringRequestUtils;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -41,6 +42,7 @@ public class CustomizeCompositeTokenGranter extends CompositeTokenGranter {
             this.authorizationService.loginSuccessAfter(
                     CreateLoginLogVO
                             .builder()
+                            .signType(SignTypeEnum.IN)
                             .username(username)
                             .loginTime(LocalDateTime.now())
                             .clientHost(requestInfo.getDomain())

@@ -1,7 +1,6 @@
 package com.tellus.permission.cloud.support;
 
 import com.tellus.support.model.vo.update.MoveRelationVO;
-import com.tellus.toolkit.tree.Node;
 
 import java.io.Serializable;
 import java.util.List;

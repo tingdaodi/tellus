@@ -57,6 +57,11 @@ public enum OperationTypeEnum {
      */
     @ISerializedName(value = "8")
     APPROVED(8),
+    /**
+     * 强制用户下线
+     */
+    @ISerializedName("9")
+    OFFLINE(9),
     ;
 
     @EnumValue

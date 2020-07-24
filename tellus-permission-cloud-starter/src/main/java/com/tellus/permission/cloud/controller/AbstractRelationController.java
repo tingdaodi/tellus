@@ -7,9 +7,14 @@ import com.tellus.support.PageWrapper;
 import com.tellus.support.Result;
 import com.tellus.support.annotation.IOperationLog;
 import com.tellus.support.enums.OperationTypeEnum;
+import com.tellus.support.interfaces.ISubordinate;
 import com.tellus.toolkit.ReflectionKit;
+import com.tellus.toolkit.RelationKit;
+import com.tellus.toolkit.tree.Node;
+import com.tellus.toolkit.tree.NodeBuilder;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,7 +26,8 @@ import java.util.List;
  * @author Roy
  * @date 2020/7/16 10:31
  */
-public abstract class AbstractRelationController<V, S, R, U> extends BaseRelationController {
+@Validated
+public abstract class AbstractRelationController<V extends ISubordinate, S, R, U> extends BaseRelationController {
 
     // ~ Static fields/initializers
     // ==============================================================================
@@ -38,29 +44,30 @@ public abstract class AbstractRelationController<V, S, R, U> extends BaseRelatio
     // ~ Methods
     // ==============================================================================
 
+    @GetMapping(value = "/tree", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "获取树形结构数据")
+    public Result<List<Node<V>>> tree(@Valid @RequestParam(value = "ancestor") Integer ancestor) {
+        List<V> result = basicRelationService.findSubs(ancestor);
+        List<Node<V>> nodes = new NodeBuilder<Integer, V>().relation(RelationKit.getRelation()).toNode(result);
+        return Result.success(nodes);
+    }
+
     @PostMapping(value = "/pages", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "分页查询记录")
     public Result<PageWrapper<V>> pages(@Valid @RequestBody PageInfo<R> pageInfo) {
-
         //  TODO 自动注入时间, 平台等参数, 待实现
-
         //  数据权限校验
         checkPermission(pageInfo.getQueries());
-
         return Result.success(basicRelationService.page(pageInfo));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "查询记录列表")
     public Result<List<V>> list(@Valid R retrieveVO) {
-
         //  TODO 自动注入时间, 平台等参数, 待实现
-
         retrieveVO = newInstance(retrieveVO);
-
         //  数据权限校验
         checkPermission(retrieveVO);
-
         return Result.success(basicRelationService.list(retrieveVO));
     }
 
@@ -90,7 +97,6 @@ public abstract class AbstractRelationController<V, S, R, U> extends BaseRelatio
     public Result<Boolean> removeById(@PathVariable("id") Integer id) {
         //  数据权限校验
         checkWhetherSubordinate(id);
-
         boolean result = basicRelationService.removeById(id);
         return Result.success(result);
     }

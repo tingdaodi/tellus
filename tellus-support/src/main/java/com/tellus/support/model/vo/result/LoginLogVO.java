@@ -1,6 +1,7 @@
 package com.tellus.support.model.vo.result;
 
 import com.tellus.support.annotation.IExpose;
+import com.tellus.support.enums.SignTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -28,6 +30,9 @@ public class LoginLogVO implements Serializable {
     @IExpose
     @ApiModelProperty(value = "ID", example = "10000")
     private Integer id;
+
+    @ApiModelProperty(value = "登录类型", example = "1-登入, 2-登出", allowableValues = "1,2")
+    private SignTypeEnum signType;
 
     @ApiModelProperty(value = "用户名", example = "user001")
     private String username;

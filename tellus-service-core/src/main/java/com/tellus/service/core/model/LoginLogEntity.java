@@ -3,6 +3,7 @@ package com.tellus.service.core.model;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.tellus.support.enums.SignTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,12 @@ public class LoginLogEntity implements Serializable {
      */
     @TableId("ID")
     private Integer id;
+
+    /**
+     * 登录日志类型
+     */
+    @TableId("signType")
+    private SignTypeEnum signType;
 
     /**
      * 用户名 用户名
