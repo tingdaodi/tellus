@@ -81,6 +81,13 @@ public enum SystemErrorCodeEnum implements IErrorCode {
     RELATION_NOT_MOVE_ROOT(2702, "根节点不能移动"),
     RELATION_NOT_SUPPORTED_MOVE_NODE(2703, "不支持移动节点"),
     RELATION_NOT_SUPPORTED_MOVE_TO_SUB(2704, "不支持移动至下级节点"),
+
+    // ~  2800 ~ 2899
+    // ==============================================================================
+
+    REVISE_PASSWORD_NOT_INSIDER(2800, "非系统用户无权限访问"),
+    REVISE_PASSWORD_ORIGINAL_WRONG(2801, "原始密码错误"),
+
     ;
 
     private final Integer code;

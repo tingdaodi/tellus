@@ -1,7 +1,10 @@
 package com.tellus.permission.cloud.controller.v1;
 
 import com.google.common.base.Strings;
+import com.tellus.config.dozer.DozerGenerator;
 import com.tellus.permission.cloud.controller.BaseController;
+import com.tellus.permission.cloud.model.update.ResetApiPasswordVO;
+import com.tellus.permission.cloud.model.update.ReviseApiPasswordVO;
 import com.tellus.permission.cloud.service.ISystemAuthService;
 import com.tellus.permission.oauth2.TellusSecurityProperties;
 import com.tellus.permission.oauth2.service.AuthorizationService;
@@ -9,14 +12,13 @@ import com.tellus.permission.oauth2.support.CustomizeUserDetails;
 import com.tellus.permission.oauth2.support.UserDetailsUtils;
 import com.tellus.support.Result;
 import com.tellus.support.annotation.IOperationLog;
-import com.tellus.support.enums.OperationTypeEnum;
-import com.tellus.support.enums.RelationTypeEnum;
-import com.tellus.support.enums.SignTypeEnum;
-import com.tellus.support.enums.SystemErrorCodeEnum;
+import com.tellus.support.enums.*;
 import com.tellus.support.exception.AccessDeniedException;
 import com.tellus.support.exception.NotMatchException;
+import com.tellus.support.model.cohesive.UserDetailsCondenser;
 import com.tellus.support.model.vo.result.MenuVO;
 import com.tellus.support.model.vo.result.UserVO;
+import com.tellus.support.model.vo.update.RevisePasswordVO;
 import com.tellus.toolkit.RelationKit;
 import com.tellus.toolkit.tree.Node;
 import com.tellus.toolkit.tree.NodeBuilder;
@@ -25,15 +27,13 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -63,6 +63,8 @@ public class SystemAuthController extends BaseController {
     private final ISystemAuthService systemAuthService;
     private final AuthorizationService authorizationService;
     private final TokenStore tokenStore;
+    private final PasswordEncoder passwordEncoder;
+    private final DozerGenerator dozerGenerator;
 
     // ~ Constructors
     // ==============================================================================
@@ -72,12 +74,16 @@ public class SystemAuthController extends BaseController {
                                 ConsumerTokenServices consumerTokenServices,
                                 ISystemAuthService systemAuthService,
                                 AuthorizationService authorizationService,
-                                TokenStore tokenStore) {
+                                TokenStore tokenStore,
+                                PasswordEncoder passwordEncoder,
+                                DozerGenerator dozerGenerator) {
         this.tellusSecurityProperties = tellusSecurityProperties;
         this.consumerTokenServices = consumerTokenServices;
         this.systemAuthService = systemAuthService;
         this.authorizationService = authorizationService;
         this.tokenStore = tokenStore;
+        this.passwordEncoder = passwordEncoder;
+        this.dozerGenerator = dozerGenerator;
     }
 
     // ~ Main Methods
@@ -133,6 +139,42 @@ public class SystemAuthController extends BaseController {
         String clientId = tellusSecurityProperties.getClientId();
         this.removeAccessAndRefreshToken(null, tokenStore.findTokensByClientId(clientId));
         return Result.success();
+    }
+
+    @IOperationLog(type = OperationTypeEnum.UPDATED, theme = "重置密码")
+    @PutMapping(value = "/password/reset", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("重置密码")
+    public Result<Boolean> resetPassword(@Valid @RequestBody ResetApiPasswordVO resetApiPasswordVO) {
+        resetApiPasswordVO.setNewPassword(passwordEncoder.encode(resetApiPasswordVO.getNewPassword()));
+        RevisePasswordVO reviseApiPasswordVO = dozerGenerator.convert(resetApiPasswordVO, RevisePasswordVO.class);
+        Boolean result = systemAuthService.revisePassword(reviseApiPasswordVO);
+        return Result.success(result);
+    }
+
+    @IOperationLog(type = OperationTypeEnum.UPDATED, theme = "修改密码")
+    @PutMapping(value = "/password", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("修改密码")
+    public Result<Boolean> revisePassword(@Valid @RequestBody ReviseApiPasswordVO reviseApiPasswordVO) {
+        String username = UserDetailsUtils.obtainUsername();
+
+        //  外部用户修改密码, 可根据具体业务另外处理
+
+        if (!isInsider()) {
+            throw new NotMatchException(SystemErrorCodeEnum.REVISE_PASSWORD_NOT_INSIDER,
+                    String.format("User[%s], userType[%s], Non-system user", username, UserTypeEnum.INSIDER));
+        }
+
+        UserDetailsCondenser condenser = this.systemAuthService.findUserDetailByUsername(username);
+        if (!this.passwordEncoder.matches(reviseApiPasswordVO.getOriginalPassword(), condenser.getPassword())) {
+            throw new NotMatchException(SystemErrorCodeEnum.REVISE_PASSWORD_ORIGINAL_WRONG);
+        }
+
+        String cipherPassword = this.passwordEncoder.encode(reviseApiPasswordVO.getNewPassword());
+        RevisePasswordVO revisePasswordVO = RevisePasswordVO.builder()
+                .username(username).newPassword(cipherPassword).build();
+
+        Boolean result = this.systemAuthService.revisePassword(revisePasswordVO);
+        return Result.success(result);
     }
 
     // ~ 此方法为显示登陆 swagger 文档
@@ -232,8 +274,8 @@ public class SystemAuthController extends BaseController {
         @ApiModelProperty(value = "加密类型", example = "bearer")
         private String tokenType;
 
-        @ApiModelProperty(value = "刷新Token", example = "2dfwse-d12d12-dfsdf2-df123d-232cdfsdfsdfsd")
-        private String refreshToken;
+        @ApiModelProperty(value = "刷新Token")
+        private RefreshToken refreshToken;
 
         @ApiModelProperty(value = "作用域", example = "all")
         private String scope;
@@ -247,7 +289,7 @@ public class SystemAuthController extends BaseController {
             @ApiModelProperty(value = "Token", example = "2dfwse-d12d12-dfsdf2-df123d-232cdfsdfsdfsd")
             private String value;
 
-            @ApiModelProperty(value = "过期时间", example = "2020-07-24")
+            @ApiModelProperty(value = "过期时间", example = "2020-07-24 00:00:00")
             private String expiration;
         }
     }
