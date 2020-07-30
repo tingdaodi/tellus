@@ -3,6 +3,7 @@ package com.tellus.permission.oauth2.service;
 import com.google.common.collect.Sets;
 import com.tellus.permission.oauth2.support.CustomizeUserDetails;
 import com.tellus.support.enums.RelationTypeEnum;
+import com.tellus.support.model.vo.create.CreateLoginLogVO;
 import com.tellus.support.model.vo.result.ResourceVO;
 
 import java.util.List;
@@ -63,8 +64,9 @@ public interface AuthorizationService {
     /**
      * 登录成功后, 记录登录日志, 并更新用户最后登录时间/IP
      *
+     * @param createLoginLogVO 创建日志
      * @return Boolean
      */
-    Boolean loginSuccessAfter();
+    Boolean loginSuccessAfter(CreateLoginLogVO createLoginLogVO);
 
 }

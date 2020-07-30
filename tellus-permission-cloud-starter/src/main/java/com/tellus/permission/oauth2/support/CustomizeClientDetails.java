@@ -29,7 +29,7 @@ public class CustomizeClientDetails implements ClientDetails, Serializable {
     private List<GrantedAuthority> authorities = Collections.emptyList();
     private Integer accessTokenValiditySeconds;
     private Integer refreshTokenValiditySeconds;
-    private Map<String, Object> additionalInformation = new LinkedHashMap<String, Object>();
+    private Map<String, Object> additionalInformation = new LinkedHashMap<>();
 
     public CustomizeClientDetails() {
     }

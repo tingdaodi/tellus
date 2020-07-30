@@ -287,7 +287,6 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
         private Integer id;
         private String name;
         private String role;
-
         private Integer parentId;
     }
 
@@ -313,7 +312,6 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
         private Integer groupId;
         private String groupName;
         private String groupValue;
-
         private Integer groupParentId;
 
         @Override
