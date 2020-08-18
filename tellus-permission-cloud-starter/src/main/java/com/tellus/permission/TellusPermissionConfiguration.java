@@ -1,4 +1,4 @@
-package com.tellus.permission.cloud;
+package com.tellus.permission;
 
 import com.tellus.config.userinfo.UserInfoArgumentResolver;
 import com.tellus.config.userinfo.UserInfoService;

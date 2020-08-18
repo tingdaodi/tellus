@@ -1,4 +1,4 @@
-package com.tellus.permission.cloud;
+package com.tellus.permission;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
