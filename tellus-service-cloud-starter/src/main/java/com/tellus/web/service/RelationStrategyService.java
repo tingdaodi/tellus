@@ -35,6 +35,17 @@ public interface RelationStrategyService {
      * 移动节点
      *
      * @param moveRelationVO 移动实体
+     */
+    default void move(MoveRelationVO moveRelationVO) {
+        //  isInstantMove  即时移动
+        //  isSaveRecord   是否保存记录
+        this.move(moveRelationVO, Boolean.TRUE, Boolean.TRUE);
+    }
+
+    /**
+     * 移动节点
+     *
+     * @param moveRelationVO 移动实体
      * @param isInstantMove  即时移动
      * @param isSaveRecord   是否保存记录
      */
