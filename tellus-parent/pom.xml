@@ -61,7 +61,7 @@
             <dependency>
                 <groupId>com.pn.tellus</groupId>
                 <artifactId>tellus-dependencies</artifactId>
-                <version>${project.version}</version>
+                <version>${tellus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
