@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * @see com.tellus.support.RequestInfo
  */
 public class RequestInfoArgumentResolver implements HandlerMethodArgumentResolver {
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(GetRequestInfo.class);
