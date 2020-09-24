@@ -78,7 +78,6 @@ public class Result<T> implements Serializable {
         return Result.error(code, null, data);
     }
 
-
     public static <T> Result<T> error(String message, T data) {
         return Result.error(INTERNAL_ERROR_CODE, message, data);
     }
