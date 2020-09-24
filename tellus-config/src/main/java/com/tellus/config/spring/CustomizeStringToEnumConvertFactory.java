@@ -16,7 +16,7 @@ import java.util.Map;
  * @author Roy
  * @date 2020/5/21 13:29
  */
-@SuppressWarnings({"unused", "rawtypes"})
+@SuppressWarnings({"rawtypes"})
 public class CustomizeStringToEnumConvertFactory implements ConverterFactory<String, Enum> {
 
     private static Class<?> getEnumType(Class<?> targetType) {

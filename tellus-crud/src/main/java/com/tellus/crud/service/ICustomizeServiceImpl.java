@@ -2,9 +2,6 @@ package com.tellus.crud.service;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tellus.crud.support.EntityUtil;
-
-import java.util.function.Supplier;
 
 /**
  * 自定义: ICustomizeService 拓展实现类

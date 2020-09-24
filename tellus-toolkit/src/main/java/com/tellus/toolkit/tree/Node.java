@@ -13,7 +13,6 @@ import java.util.List;
  * @author Roy
  * @date 2020/5/18 21:42
  */
-
 @Data
 @NoArgsConstructor
 public class Node<V extends Serializable> implements Serializable {

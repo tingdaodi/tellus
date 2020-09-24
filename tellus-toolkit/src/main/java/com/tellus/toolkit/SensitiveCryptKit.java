@@ -29,7 +29,7 @@ public class SensitiveCryptKit {
     /**
      * 原始秘钥
      */
-    private String originalSecret;
+    private final String originalSecret;
     /**
      * 敏感字段
      */
