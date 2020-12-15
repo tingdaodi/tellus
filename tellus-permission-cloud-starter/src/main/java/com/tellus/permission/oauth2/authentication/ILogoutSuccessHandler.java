@@ -33,11 +33,13 @@ public class ILogoutSuccessHandler implements LogoutSuccessHandler {
     }
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+    public void onLogoutSuccess(HttpServletRequest request,
+                                HttpServletResponse response,
                                 Authentication authentication) {
         String authHeader = request.getHeader(tellusSecurityProperties.getTokenHeader());
-        if (!Strings.isNullOrEmpty(authHeader) && authHeader.startsWith(tellusSecurityProperties.getTokenPrefix())) {
-            final String xToken = authHeader.substring(tellusSecurityProperties.getTokenPrefix().length() + 1);
+        String tokenPrefix = tellusSecurityProperties.getTokenPrefix();
+        if (!Strings.isNullOrEmpty(authHeader) && authHeader.startsWith(tokenPrefix)) {
+            final String xToken = authHeader.substring(tokenPrefix.length() + 1);
             consumerTokenServices.revokeToken(xToken);
         }
 
