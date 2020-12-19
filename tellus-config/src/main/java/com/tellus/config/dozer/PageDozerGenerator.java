@@ -14,7 +14,8 @@ public class PageDozerGenerator extends DozerGenerator implements IPageGenerator
 
     @Override
     public <T, V, S extends IPage<T>> PageWrapper<V> convert(S src, Class<V> clz) {
-        return new PageWrapper<>(src.getTotal(), src.getSize(), src.getCurrent(), this.convert(src.getRecords(), clz));
+        return new PageWrapper<>(src.getTotal(), src.getSize(), src.getCurrent(),
+                this.convert(src.getRecords(), clz));
     }
 
     @Override
@@ -26,6 +27,7 @@ public class PageDozerGenerator extends DozerGenerator implements IPageGenerator
     @Override
     public <T, V, S extends PageInfo<V>> PageInfo<V> convert(S pageInfo, Class<V> clz) {
         return new PageInfo<>(pageInfo.getSize(), pageInfo.getCurrent(),
-                this.convert(pageInfo.getQueries(), clz), pageInfo.getAscs(), pageInfo.getDescs());
+                this.convert(pageInfo.getQueries(), clz),
+                pageInfo.getAscs(), pageInfo.getDescs());
     }
 }
