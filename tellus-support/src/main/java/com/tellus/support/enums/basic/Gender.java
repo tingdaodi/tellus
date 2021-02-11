@@ -18,6 +18,7 @@ public enum Gender {
      * 男性
      */
     MALE(1, "男"),
+    FEMALE(2, "女"),
     ;
 
     @EnumValue

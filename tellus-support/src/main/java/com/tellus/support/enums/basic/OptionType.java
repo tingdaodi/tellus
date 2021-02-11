@@ -49,7 +49,7 @@ public enum OptionType {
      */
     LIKE,
     /**
-     * NOT LIKE ‘%%value’
+     * NOT LIKE ‘%value%’
      */
     NOT_LIKE,
     /**
