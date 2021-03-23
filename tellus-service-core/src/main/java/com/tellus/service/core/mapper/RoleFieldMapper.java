@@ -36,6 +36,7 @@ public interface RoleFieldMapper extends BaseMapper<RoleFieldEntity> {
     /**
      * 查询角色及其所有下级角色拥有的字段关系数据 (包含 #{ancestor})
      *
+     *
      * @param roleIds 上级角色ID
      * @return 角色-字段关系
      */

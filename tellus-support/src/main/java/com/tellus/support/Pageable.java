@@ -23,10 +23,10 @@ import java.io.Serializable;
 public class Pageable implements Serializable {
     private static final long serialVersionUID = 9205108190893523872L;
 
-    @ApiModelProperty(name = "size", value = "每页条数", example = "默认： 10")
+    @ApiModelProperty(name = "size", value = "每页条数", example = "默认：10")
     private Integer size = 10;
 
-    @ApiModelProperty(name = "current", value = "当前页数", example = "默认： 1")
+    @ApiModelProperty(name = "current", value = "当前页数", example = "默认：1")
     private Integer current = 1;
 
 }

@@ -207,7 +207,7 @@ public class CustomizeClientDetails implements ClientDetails, Serializable {
 
     private void setAuthoritiesAsStrings(Set<String> values) {
         setAuthorities(AuthorityUtils.createAuthorityList(values
-                .toArray(new String[values.size()])));
+                .toArray(new String[0])));
     }
 
     @Override
@@ -342,11 +342,8 @@ public class CustomizeClientDetails implements ClientDetails, Serializable {
         } else if (!scope.equals(other.scope))
             return false;
         if (additionalInformation == null) {
-            if (other.additionalInformation != null)
-                return false;
-        } else if (!additionalInformation.equals(other.additionalInformation))
-            return false;
-        return true;
+            return other.additionalInformation == null;
+        } else return additionalInformation.equals(other.additionalInformation);
     }
 
     @Override

@@ -140,7 +140,7 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
      * @param type   关系类型
      * @param nodeId 节点Id
      */
-    @Delete("delete from t_relation where type=#{type} and descendant=#{nodeid}")
+    @Delete("delete from t_relation where type=#{type} and descendant=#{nodeId}")
     void deletePath(@Param("type") int type, @Param("nodeId") int nodeId);
 
     /**
@@ -153,27 +153,3 @@ public interface RelationMapper extends BaseMapper<RelationEntity> {
     @Select("select max(distance) as distance from t_relation where type=#{type} and ancestor=#{ancestor} ")
     Integer selectLowestDistances(@Param("type") int type, @Param("ancestor") int ancestor);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
