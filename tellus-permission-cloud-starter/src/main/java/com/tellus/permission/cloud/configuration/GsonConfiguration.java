@@ -4,9 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.GsonBuilder;
-import com.tellus.config.gson.CustomizeEnumTypeAdapterFactory;
-import com.tellus.config.gson.LocalDateJsonConverter;
-import com.tellus.config.gson.LocalDateTimeJsonConverter;
+import com.tellus.config.gson.*;
 import com.tellus.permission.TellusPermissionProperties;
 import com.tellus.permission.cloud.support.gson.ResourcesDeserializationExclusionStrategy;
 import com.tellus.permission.cloud.support.gson.ResourcesSerializationExclusionStrategy;
@@ -16,6 +14,8 @@ import com.tellus.toolkit.DateFormatConstants;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import springfox.documentation.spring.web.json.Json;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -56,6 +56,12 @@ public class GsonConfiguration {
     @Bean
     public ExclusionStrategy resourcesSerializationExclusionStrategy() {
         return new ResourcesSerializationExclusionStrategy(securityProperties.getIgnoredUrls(), webMvcProperties.getServlet().getServletPrefix());
+    }
+
+    @Bean
+    public GsonHttpMessageConverter gsonHttpMessageConverter() {
+        return new CustomizeGsonHttpMessageConverter(() -> gsonBuilder().setPrettyPrinting()
+                .registerTypeAdapter(Json.class, new SpringfoxJsonToGsonAdapter()));
     }
 
     @SuppressWarnings("UnstableApiUsage")
