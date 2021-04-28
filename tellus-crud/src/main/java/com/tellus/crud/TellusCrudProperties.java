@@ -25,8 +25,8 @@ public class TellusCrudProperties {
      */
     private String sensitiveSecret = "M5BskhTL3PkuuGjOu5LqNMCsEHdCMOD";
     /**
-     * 敏感字段
+     * 加减密-敏感字段
      */
-    private Set<String> sensitiveFields = Sets.newHashSet("phone", "email", "officeName", "realName");
+    private Set<String> sensitiveCryptFields = Sets.newHashSet("phone", "email");
 
 }

@@ -1,6 +1,7 @@
 package com.tellus.permission.oauth2.support;
 
 import com.tellus.support.enums.DisplayModeEnum;
+import com.tellus.support.enums.ParamMethodEnum;
 import com.tellus.support.enums.UserStatusEnum;
 import com.tellus.support.enums.UserTypeEnum;
 import com.tellus.support.enums.basic.Gender;
@@ -270,7 +271,7 @@ public class CustomizeUserDetails implements UserDetails, CredentialsContainer, 
 
         private Integer id;
         private Integer resourceId;
-        private String method;
+        private ParamMethodEnum method;
         private String label;
         private String name;
         private String type;
