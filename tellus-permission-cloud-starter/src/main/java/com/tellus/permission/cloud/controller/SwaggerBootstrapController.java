@@ -54,7 +54,7 @@ import java.util.stream.Collectors;
 public class SwaggerBootstrapController {
 
     private static final String DEFAULT_GROUP_URL = "/field/source/data";
-    private static final String ALL_GROUP_URL = "field/source/data/all";
+    private static final String ALL_GROUP_URL = "/field/source/data/all";
 
     //  swagger 分组名称
     private static final Set<String> GROUP_API_DOCS = Sets.newHashSet();
