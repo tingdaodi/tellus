@@ -35,9 +35,9 @@ public class FieldController extends AbstractCrudController<FieldVO, CreateField
     // ==============================================================================
 
     @Autowired
-    public FieldController(IFieldService fieldService, IFieldService fieldService1) {
+    public FieldController(IFieldService fieldService) {
         super(fieldService);
-        this.fieldService = fieldService1;
+        this.fieldService = fieldService;
     }
 
     // ~ Methods
