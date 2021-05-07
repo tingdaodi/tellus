@@ -148,18 +148,18 @@ public final class ReflectionKit {
     public static Class<?> getSuperClassGenericType(final Class<?> clazz, final int index) {
         Type genType = clazz.getGenericSuperclass();
         if (!(genType instanceof ParameterizedType)) {
-            System.out.println(String.format("Warn: %s's superclass not ParameterizedType", clazz.getSimpleName()));
+            System.out.printf("Warn: %s's superclass not ParameterizedType%n", clazz.getSimpleName());
             return Object.class;
         }
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         if (index >= params.length || index < 0) {
-            System.out.println(String.format("Warn: Index: %s, Size of %s's Parameterized Type: %s .", index,
-                    clazz.getSimpleName(), params.length));
+            System.out.printf("Warn: Index: %s, Size of %s's Parameterized Type: %s .%n", index,
+                    clazz.getSimpleName(), params.length);
             return Object.class;
         }
         if (!(params[index] instanceof Class)) {
-            System.out.println(String.format("Warn: %s not set the actual class on superclass generic parameter",
-                    clazz.getSimpleName()));
+            System.out.printf("Warn: %s not set the actual class on superclass generic parameter%n",
+                    clazz.getSimpleName());
             return Object.class;
         }
         return (Class<?>) params[index];
